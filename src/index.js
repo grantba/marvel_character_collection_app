@@ -2,12 +2,13 @@ const _marvelCopyright = "© 2021 MARVEL";
 const _attributionText = "Data provided by Marvel. © 2021 MARVEL";
 const _attributionHTML = "<a href=\"http://marvel.com\">Data provided by Marvel. © 2021 MARVEL</a>";
 
-const _baseUrl = "http://gateway.marvel.com/v1/public/characters";
+const _baseUrl = "http://localhost:3000";
+const characterService = new CharacterService("http://gateway.marvel.com/v1/public/characters");
 
 const sideNav = document.querySelector(".sidenav");
 const characterDiv = document.getElementById("character-container");
 const commentsDiv = document.getElementById("comments-container");
-const header = document.getElementById("header");
+const header = document.querySelector(".header");
 const contentArea = document.getElementById("content");
 
 const loginButton = document.getElementById("login-btn");
@@ -16,7 +17,7 @@ const searchButton = document.getElementById("search-btn");
 
 function addHeaderContent() {
     const headerContent = `
-        <a href="#" class="logo">Welcome to the Marvel Characters App</a>
+        <a href="#" class="logo">Welcome to the Marvel Character Collection App</a>
         <div class="header-right">
         <a id="search-characters" href="#">Search Characters</a>
         <a href="#" id="login-btn">Login</a>
