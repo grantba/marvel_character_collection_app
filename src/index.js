@@ -1,6 +1,7 @@
 const _marvelCopyright = "© 2021 MARVEL";
 const _attributionText = "Data provided by Marvel. © 2021 MARVEL";
 const _attributionHTML = "<a href=\"http://marvel.com\">Data provided by Marvel. © 2021 MARVEL</a>";
+
 const _baseUrl = "http://gateway.marvel.com/v1/public/characters";
 
 const sideNav = document.querySelector(".sidenav");
@@ -8,6 +9,10 @@ const characterDiv = document.getElementById("character-container");
 const commentsDiv = document.getElementById("comments-container");
 const header = document.getElementById("header");
 const contentArea = document.getElementById("content");
+
+const loginButton = document.getElementById("login-btn");
+const signupButton = document.getElementById("signup-btn");
+const searchButton = document.getElementById("search-btn");
 
 function addHeaderContent() {
     const headerContent = `
@@ -46,4 +51,33 @@ function addCharacterSearchForm() {
         characterDiv.innerHTML = "";
         commentsDiv.innerHTML = "";
     }
+}
+
+sideNav.addEventListener("click", event => {
+    if (event.target.id === "my-character-collection") {
+        getCollectionCharacters();
+    }
+    if (event.target.id === "my-comments") {
+        getComments();
+    }
+})
+
+function displaySearchForm() {
+    const form = document.createElement("form");
+    form.innerHTML = `
+        <label id="search-label">Search for Character By Name:</label><br><br>
+        <input type="text" id="character-name" placeholder="Enter Name Here..."><br><br>
+        <input type="submit" id="search-btn" value="Search">
+    `
+    form.id = "marvel-character-search-form";
+    characterDiv.innerHTML = "";
+    commentsDiv.innerHTML = "";
+    commentsDiv.appendChild(form);
+
+    const characterSearchForm = document.getElementById("marvel-character-search-form");
+    characterSearchForm.addEventListener("submit", event => {
+        event.preventDefault();
+        const search = document.getElementById("character-name").value;
+        getCharacterByName(search);
+    });
 }
