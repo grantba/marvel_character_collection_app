@@ -43,23 +43,23 @@ User.addSideNavContent();
 
 User.sideNav.addEventListener("click", event => {
     if (event.target.id === "my-character-collection") {
-        Character.getCollectionCharacters();
+        characterService.getCollectionCharacters();
     }
     if (event.target.id === "my-comments") {
-        Comment.getComments();
+        commentService.getComments();
     }
 })
 
 function addCollectionButtonListener() {
     const collButtons = document.getElementsByClassName("collection-btn");
     for (const button of collButtons) {
-        button.addEventListener("click", event => getCollectionCharacter(event));
+        button.addEventListener("click", event => characterService.getCollectionCharacter(event));
     }
 }
 
 function addMoreInfoButtonListener() {
     const infoButtons = document.getElementsByClassName("more-info-btn");
     for (const button of infoButtons) {
-        button.addEventListener("click", event => getMoreInfo(event));
+        button.addEventListener("click", event => characterService.getMoreInfo(event));
     }
 }

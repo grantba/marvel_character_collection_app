@@ -12,4 +12,5 @@ class CollectionCharacter {
         this.user_id = user_id;
     }
 
+    
 }
