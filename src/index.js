@@ -5,14 +5,10 @@ const _attributionHTML = "<a href=\"http://marvel.com\">Data provided by Marvel.
 const _baseUrl = "http://localhost:3000";
 const characterService = new CharacterService("http://gateway.marvel.com/v1/public/characters");
 
-const sideNav = document.querySelector(".sidenav");
-const characterDiv = document.getElementById("character-container");
-const commentsDiv = document.getElementById("comments-container");
 const header = document.querySelector(".header");
 const contentArea = document.getElementById("content");
-
-const loginButton = document.getElementById("login-btn");
-const signupButton = document.getElementById("signup-btn");
+const characterDiv = document.getElementById("character-container");
+const commentsDiv = document.getElementById("comments-container");
 const searchButton = document.getElementById("search-btn");
 
 function addHeaderContent() {
@@ -27,26 +23,14 @@ function addHeaderContent() {
     header.innerHTML = headerContent;
 
     const searchCharacters = document.getElementById("search-characters");
-    searchCharacters.addEventListener("click", addCharacterSearchForm);
+    searchCharacters.addEventListener("click", getCharacterSearchForm);
 }
 
 addHeaderContent();
 
-function addSideNavContent() {
-    const sideNavContent = `
-        <a href="#" id="my-character-collection">My Character Collection</a>
-        <a href="#" id="my-comments">My Comments</a>
-        <!-- <a href="#" id="projects">Projects</a>
-        <a href="#" id="contact">Contact</a> -->
-    `
-    sideNav.innerHTML = sideNavContent;
-}
-
-addSideNavContent();
-
-function addCharacterSearchForm() {
+function getCharacterSearchForm() {
     if (commentsDiv.innerHTML === "" && characterDiv.innerHTML === "") {
-        displaySearchForm();
+        Character.displaySearchForm();
     }
     else {
         characterDiv.innerHTML = "";
@@ -54,31 +38,13 @@ function addCharacterSearchForm() {
     }
 }
 
-sideNav.addEventListener("click", event => {
+User.addSideNavContent();
+
+User.sideNav.addEventListener("click", event => {
     if (event.target.id === "my-character-collection") {
-        getCollectionCharacters();
+        Character.getCollectionCharacters();
     }
     if (event.target.id === "my-comments") {
-        getComments();
+        Comment.getComments();
     }
 })
-
-function displaySearchForm() {
-    const form = document.createElement("form");
-    form.innerHTML = `
-        <label id="search-label">Search for Character By Name:</label><br><br>
-        <input type="text" id="character-name" placeholder="Enter Name Here..."><br><br>
-        <input type="submit" id="search-btn" value="Search">
-    `
-    form.id = "marvel-character-search-form";
-    characterDiv.innerHTML = "";
-    commentsDiv.innerHTML = "";
-    commentsDiv.appendChild(form);
-
-    const characterSearchForm = document.getElementById("marvel-character-search-form");
-    characterSearchForm.addEventListener("submit", event => {
-        event.preventDefault();
-        const search = document.getElementById("character-name").value;
-        getCharacterByName(search);
-    });
-}
