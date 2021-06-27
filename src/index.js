@@ -31,7 +31,7 @@ addHeaderContent();
 
 function getCharacterSearchForm() {
     if (commentsDiv.innerHTML === "" && characterDiv.innerHTML === "") {
-        Character.displaySearchForm();
+        MarvelCharacter.displaySearchForm();
     }
     else {
         characterDiv.innerHTML = "";

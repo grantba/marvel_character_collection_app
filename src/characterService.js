@@ -4,7 +4,7 @@ class CharacterService {
         this.url = url
     }
 
-    getCharacterByName(search) {
+    getMarvelCharacterByName(search) {
         const ts = Number(new Date());
         const hash = md5(ts + _PRIVATE_KEY + _PUBLIC_KEY);
     
@@ -23,7 +23,7 @@ class CharacterService {
     
         fetch(`${this.url}/search_by_name`, options)
         .then(resp => resp.json())
-        .then(characterInfo => {Character.createCharacter(characterInfo)})
+        .then(characterInfo => {MarvelCharacter.createMarvelCharacter(characterInfo)})
         .catch(() => {
             alert("That character was not found. Please try again.")
         });
