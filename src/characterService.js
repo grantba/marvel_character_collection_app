@@ -52,7 +52,35 @@ class CharacterService {
     
         fetch(`${this.url}/search_by_id`, options)
         .then(resp => resp.json())
-        .then(characterInfo => {debugger})
+        .then(characterInfo => CollectionCharacter.createCollectionCharacter(characterInfo))
+        .catch(error => {
+            alert(`There was an issue adding this character to your collection due to ${error}. Please try again.`)
+        });
+    }
+
+    addCharacterToCollection(name, description, thumbnail, urls, comics, events, series) {
+        const params = {
+            "name": name,
+            "description": description,
+            "thumbnail": thumbnail,
+            "urls": urls,
+            "comics": comics.toString(),
+            "events": events.toString(),
+            "series": series.toString(),
+            "user_id": 1
+            // added user id for now, will change later
+        }
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(params)
+        }
+    
+        fetch(`${this.url}/characters`, options)
+        .then(resp => resp.json())
+        .then(character => {CollectionCharacter.addCollectionCharacter(character)})
         .catch(error => {
             alert(`There was an issue adding this character to your collection due to ${error}. Please try again.`)
         });
