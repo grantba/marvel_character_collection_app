@@ -16,7 +16,7 @@ class Character {
         characterSearchForm.addEventListener("submit", event => {
             event.preventDefault();
             const search = document.getElementById("character-name").value;
-            Character.getCharacterByName(search);
+            characterService.getCharacterByName(search);
         });
     }
 }

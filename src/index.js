@@ -3,7 +3,8 @@ const _attributionText = "Data provided by Marvel. © 2021 MARVEL";
 const _attributionHTML = "<a href=\"http://marvel.com\">Data provided by Marvel. © 2021 MARVEL</a>";
 
 const _baseUrl = "http://localhost:3000";
-const characterService = new CharacterService("http://gateway.marvel.com/v1/public/characters");
+const characterService = new CharacterService(_baseUrl);
+// const characterService = new CharacterService("http://gateway.marvel.com/v1/public/characters");
 
 const header = document.querySelector(".header");
 const contentArea = document.getElementById("content");
@@ -48,3 +49,4 @@ User.sideNav.addEventListener("click", event => {
         Comment.getComments();
     }
 })
+
