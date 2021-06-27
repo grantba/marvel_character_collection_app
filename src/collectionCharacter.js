@@ -11,11 +11,12 @@ class CollectionCharacter {
         this.series = series;
         this.user_id = user_id;
 
+        this.element = document.createElement("div");
+        this.element.dataset.id = this.id;
         this.displayCollectionCharacter();
     }
 
     createDiv() {
-        this.element = document.createElement("div");
         this.element.innerHTML = `
         <div class="flip-card">
             <div class="flip-card-inner">
@@ -36,16 +37,15 @@ class CollectionCharacter {
         </div>
         <br><br>
         `
-        this.element.dataset.id = this.id;
         return this.element;
     }
 
     displayCollectionCharacter() {
         characterDiv.appendChild(this.createDiv());
-        // addRemoveFromCollectionButtonListener();
-        // addCommentCollectionButtonListener();
-        // addMoreInfoButtonListener();
-        // addHeartListener();
+        CollectionCharacter.addRemoveFromCollectionButtonListener();
+        CollectionCharacter.addCommentCollectionButtonListener();
+        addMoreInfoButtonListener();
+        CollectionCharacter.addHeartListener();
     }
 
     static createCollectionCharacter(characterInfo) {
@@ -90,4 +90,28 @@ class CollectionCharacter {
 
         new CollectionCharacter(id, name, description, thumbnail, urls);
     }
+
+    static addHeartListener() {
+        const likes = document.getElementsByClassName("like");
+        for (const like of likes) {
+            like.addEventListener("click", event => Like.changeLikeStatus(event))};
+        const unlikes = document.getElementsByClassName("unlike");
+        for (const unlike of unlikes) {
+            unlike.addEventListener("click", event => Like.changeUnlikeStatus(event))};
+    }
+    
+    static addRemoveFromCollectionButtonListener() {
+        const collButtons = document.getElementsByClassName("remove-collection-btn");
+        for (const button of collButtons) {
+            button.addEventListener("click", event => CollectionCharacter.removeCollectionCharacter(event));
+        }
+    }
+
+    static addCommentCollectionButtonListener() {
+        const commentButtons = document.getElementsByClassName("comment-collection-btn");
+        for (const button of commentButtons) {
+            button.addEventListener("click", event => Comment.addCollectionCharacterComment(event));
+        }
+    }
+
 }

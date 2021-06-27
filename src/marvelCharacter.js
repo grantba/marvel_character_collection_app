@@ -10,11 +10,12 @@ class MarvelCharacter {
         this.events = events;
         this.series = series;
 
+        this.element = document.createElement("div");
+        this.element.dataset.id = this.id;
         this.displayMarvelCharacter();
     }
 
     createDiv() {
-        this.element = document.createElement("div");
         this.element.innerHTML = `
         <div class="flip-card">
             <div class="flip-card-inner">
@@ -33,7 +34,6 @@ class MarvelCharacter {
         </div>
         <br><br>
         `
-        this.element.dataset.id = this.id;
         return this.element;
     }
 
@@ -78,12 +78,19 @@ class MarvelCharacter {
 
                     new MarvelCharacter(id, name, description, thumbnail, urls);
                 })
-            addCollectionButtonListener();
+            MarvelCharacter.addCollectionButtonListener();
             addMoreInfoButtonListener();
             }
         }
         else {
             alert("That character was not found. Please try again.")
+        }
+    }
+
+    static addCollectionButtonListener() {
+        const collButtons = document.getElementsByClassName("collection-btn");
+        for (const button of collButtons) {
+            button.addEventListener("click", event => characterService.getCollectionCharacter(event));
         }
     }
 

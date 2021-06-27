@@ -29,7 +29,7 @@ body {
 .header a.logo {
     font-size: 40px;
     font-weight: bold;
-    padding-right: 210px;
+    padding-right: auto;
     text-align: center;
     -webkit-animation: glow 1s ease-in-out infinite alternate;
     -moz-animation: glow 1s ease-in-out infinite alternate;
