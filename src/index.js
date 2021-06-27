@@ -50,3 +50,16 @@ User.sideNav.addEventListener("click", event => {
     }
 })
 
+function addCollectionButtonListener() {
+    const collButtons = document.getElementsByClassName("collection-btn");
+    for (const button of collButtons) {
+        button.addEventListener("click", event => getCollectionCharacter(event));
+    }
+}
+
+function addMoreInfoButtonListener() {
+    const infoButtons = document.getElementsByClassName("more-info-btn");
+    for (const button of infoButtons) {
+        button.addEventListener("click", event => getMoreInfo(event));
+    }
+}
