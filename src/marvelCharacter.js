@@ -90,7 +90,7 @@ class MarvelCharacter {
     static addCollectionButtonListener() {
         const collButtons = document.getElementsByClassName("collection-btn");
         for (const button of collButtons) {
-            button.addEventListener("click", event => characterService.getCollectionCharacter(event));
+            button.addEventListener("click", event => characterService.getMarvelCharacterById(event));
         }
     }
 

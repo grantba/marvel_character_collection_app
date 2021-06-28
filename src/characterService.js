@@ -1,6 +1,6 @@
 class CharacterService {
 
-    constructor(url){
+    constructor(url) {
         this.url = url
     }
 
@@ -32,7 +32,7 @@ class CharacterService {
         characterSearchForm.reset();
     }
 
-    getCollectionCharacter(event) {
+    getMarvelCharacterById(event) {
         const id = event.target.parentElement.parentElement.parentElement.parentElement.dataset.id;
         const ts = Number(new Date());
         const hash = md5(ts + _PRIVATE_KEY + _PUBLIC_KEY);
@@ -96,16 +96,25 @@ class CharacterService {
     
         fetch(`${this.url}/characters/${id}`, options)
         .then(resp => resp.json())
-        .then(character => {CollectionCharacter.removeCharacterDiv(div, character.name)})
+        .then(character => {CollectionCharacter.removeCharacterDiv(div, character)})
         .catch(error => {
             alert(`There was an issue removing this character from your collection due to ${error}. Please try again.`)
         });
     }
 
+    // getCollectionCharacter(id) {
+    //     fetch(`${this.url}/characters/${id}`)
+    //     .then(resp => resp.json())
+    //     .then(characters => {CollectionCharacter.addCollectionCharacters(characters)})
+    //     .catch((error) => {
+    //         alert(`There was an issue getting the characters from your collection due to ${error}. Please try again.`)
+    //     });
+    // }
+
     getCollectionCharacters() {
         fetch(`${this.url}/characters`)
         .then(resp => resp.json())
-        .then(characters => CollectionCharacter.createCollectionCharacters(characters))
+        .then(characters => {CollectionCharacter.addCollectionCharacters(characters.data)})
         .catch((error) => {
             alert(`There was an issue getting the characters from your collection due to ${error}. Please try again.`)
         });

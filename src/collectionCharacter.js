@@ -1,6 +1,6 @@
 class CollectionCharacter {
 
-    constructor(id, name, description, thumbnail, urls, comics, events, series, user_id) {
+    constructor(id, name, description, thumbnail, urls, comics, events, series, like, user_id) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -9,6 +9,7 @@ class CollectionCharacter {
         this.comics = comics;
         this.events = events;
         this.series = series;
+        this.like = Like.updateLikeStatus(like);
         this.user_id = user_id;
 
         this.element = document.createElement("div");
@@ -31,7 +32,7 @@ class CollectionCharacter {
                     <button class="remove-collection-btn">Remove From My Collection</button>
                     <button class="comment-collection-btn">Add Comment</button>
                     <button class="more-info-btn">See More Information</button>
-                    <p id="likes-text"><span class="like">Like ❤</span>&emsp;<span class="unlike">Dislike ❤</span></p>
+                    <p id="likes-text">${this.like}</p>
                 </div>
             </div>
         </div>
@@ -82,13 +83,19 @@ class CollectionCharacter {
         alert(`${character.data.attributes.name} was added to your character collection!`)
         characterDiv.innerHTML = "";
         commentsDiv.innerHTML = "";
+
         let id = character.data.id;
         let name = character.data.attributes.name;
         let description = character.data.attributes.description;
         let thumbnail = character.data.attributes.thumbnail;
         let urls = character.data.attributes.urls;
-
-        new CollectionCharacter(id, name, description, thumbnail, urls);
+        let comics = null;
+        let events = null;
+        let series = null;
+        let like = null;
+        let user_id = 1;
+        
+        new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, user_id);
     }
 
     static addHeartListener() {
@@ -114,9 +121,31 @@ class CollectionCharacter {
         }
     }
     
-    static removeCharacterDiv(div, name) {
+    static removeCharacterDiv(div, character) {
         div.remove();
-        alert(`${name} was removed from your character collection!`)
+        alert(`${character.data.attributes.name} was removed from your character collection!`)
+    }
+
+    // user can only leave one comment per character
+    static addCollectionCharacters(characters) {
+        characterDiv.innerHTML = "";
+        commentsDiv.innerHTML = "";
+
+        characters.forEach(character => {
+            let id = character.id;
+            let name = character.attributes.name;
+            let description = character.attributes.description;
+            let thumbnail = character.attributes.thumbnail;
+            let urls = character.attributes.urls;
+            let likes = character.attributes.likes.find(like => like.user_id === 1);
+            let like = (likes === undefined ? undefined : likes.like_status);
+            let comics = null;
+            let events = null;
+            let series = null;
+            let user_id = 1;
+
+            new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, user_id);
+        })
     }
 
 }

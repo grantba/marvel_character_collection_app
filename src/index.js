@@ -4,6 +4,7 @@ const _attributionHTML = "<a href=\"http://marvel.com\">Data provided by Marvel.
 
 const _baseUrl = "http://localhost:3000";
 const characterService = new CharacterService(_baseUrl);
+const likeService = new LikeService(_baseUrl);
 // const characterService = new CharacterService("http://gateway.marvel.com/v1/public/characters");
 
 const header = document.querySelector(".header");
