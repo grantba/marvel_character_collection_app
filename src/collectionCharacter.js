@@ -126,26 +126,49 @@ class CollectionCharacter {
         alert(`${character.data.attributes.name} was removed from your character collection!`)
     }
 
+    static addUpdatedLikeCollectionCharacter(character, like_status) {
+        characterDiv.innerHTML = "";
+        commentsDiv.innerHTML = "";
+
+        let id = character.id;
+        let name = character.name;
+        let description = character.description;
+        let thumbnail = character.thumbnail;
+        let urls = character.urls;
+        let comics = null;
+        let events = null;
+        let series = null;
+        let like = (like_status === undefined ? undefined : like_status);
+        let user_id = 1;
+        
+        new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, user_id);
+    }
+
     // user can only leave one comment per character
     static addCollectionCharacters(characters) {
         characterDiv.innerHTML = "";
         commentsDiv.innerHTML = "";
 
-        characters.forEach(character => {
-            let id = character.id;
-            let name = character.attributes.name;
-            let description = character.attributes.description;
-            let thumbnail = character.attributes.thumbnail;
-            let urls = character.attributes.urls;
-            let likes = character.attributes.likes.find(like => like.user_id === 1);
-            let like = (likes === undefined ? undefined : likes.like_status);
-            let comics = null;
-            let events = null;
-            let series = null;
-            let user_id = 1;
+        if (characters.length === 0) {
+            alert("You have no characters in your collection at this time!")
+        }
+        else {
+            characters.forEach(character => {
+                let id = character.id;
+                let name = character.attributes.name;
+                let description = character.attributes.description;
+                let thumbnail = character.attributes.thumbnail;
+                let urls = character.attributes.urls;
+                let likes = character.attributes.likes.find(like => like.user_id === 1);
+                let like = (likes === undefined ? undefined : likes.like_status);
+                let comics = null;
+                let events = null;
+                let series = null;
+                let user_id = 1;
 
-            new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, user_id);
-        })
+                new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, user_id);
+            })
+        }
     }
 
 }
