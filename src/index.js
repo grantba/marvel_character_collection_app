@@ -30,13 +30,9 @@ function addHeaderContent() {
 addHeaderContent();
 
 function getCharacterSearchForm() {
-    if (commentsDiv.innerHTML === "" && characterDiv.innerHTML === "") {
-        MarvelCharacter.displaySearchForm();
-    }
-    else {
-        characterDiv.innerHTML = "";
-        commentsDiv.innerHTML = "";
-    }
+    characterDiv.innerHTML = "";
+    commentsDiv.innerHTML = "";
+    MarvelCharacter.displaySearchForm();
 }
 
 User.addSideNavContent();

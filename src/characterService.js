@@ -85,4 +85,29 @@ class CharacterService {
             alert(`There was an issue adding this character to your collection due to ${error}. Please try again.`)
         });
     }
+
+    removeCollectionCharacter(event) {
+        const id = event.target.parentElement.parentElement.parentElement.parentElement.dataset.id;
+        const div = event.target.parentElement.parentElement.parentElement.parentElement;
+    
+        const options = {
+            method: "DELETE",
+        }
+    
+        fetch(`${this.url}/characters/${id}`, options)
+        .then(resp => resp.json())
+        .then(character => {CollectionCharacter.removeCharacterDiv(div, character.name)})
+        .catch(error => {
+            alert(`There was an issue removing this character from your collection due to ${error}. Please try again.`)
+        });
+    }
+
+    getCollectionCharacters() {
+        fetch(`${this.url}/characters`)
+        .then(resp => resp.json())
+        .then(characters => CollectionCharacter.createCollectionCharacters(characters))
+        .catch((error) => {
+            alert(`There was an issue getting the characters from your collection due to ${error}. Please try again.`)
+        });
+    }
 }

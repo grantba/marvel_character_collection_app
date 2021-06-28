@@ -103,7 +103,7 @@ class CollectionCharacter {
     static addRemoveFromCollectionButtonListener() {
         const collButtons = document.getElementsByClassName("remove-collection-btn");
         for (const button of collButtons) {
-            button.addEventListener("click", event => CollectionCharacter.removeCollectionCharacter(event));
+            button.addEventListener("click", event => characterService.removeCollectionCharacter(event));
         }
     }
 
@@ -112,6 +112,11 @@ class CollectionCharacter {
         for (const button of commentButtons) {
             button.addEventListener("click", event => Comment.addCollectionCharacterComment(event));
         }
+    }
+    
+    static removeCharacterDiv(div, name) {
+        div.remove();
+        alert(`${name} was removed from your character collection!`)
     }
 
 }
