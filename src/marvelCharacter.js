@@ -79,7 +79,7 @@ class MarvelCharacter {
                     new MarvelCharacter(id, name, description, thumbnail, urls);
                 })
             MarvelCharacter.addCollectionButtonListener();
-            addMoreInfoButtonListener();
+            MarvelCharacter.addMoreInfoButtonListener();
             }
         }
         else {
@@ -91,6 +91,13 @@ class MarvelCharacter {
         const collButtons = document.getElementsByClassName("collection-btn");
         for (const button of collButtons) {
             button.addEventListener("click", event => characterService.getMarvelCharacterById(event));
+        }
+    }
+
+    static addMoreInfoButtonListener() {
+        const infoButtons = document.getElementsByClassName("more-info-btn");
+        for (const button of infoButtons) {
+            button.addEventListener("click", event => getMoreInfo(event));
         }
     }
 

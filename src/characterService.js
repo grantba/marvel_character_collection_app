@@ -119,4 +119,13 @@ class CharacterService {
             alert(`There was an issue getting the characters from your collection due to ${error}. Please try again.`)
         });
     }
+
+    getInfoCollectionCharacter(id) {
+        fetch(`${this.url}/characters/${id}`)
+        .then(resp => resp.json())
+        .then(character => CollectionCharacter.addExtraInfoCollectionCharacter(character))
+        .catch((error) => {
+            alert(`There was an issue getting this information due to ${error}. Please try again.`)
+        });
+    }
 }

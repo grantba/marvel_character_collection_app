@@ -5,8 +5,8 @@ const _attributionHTML = "<a href=\"http://marvel.com\">Data provided by Marvel.
 const _baseUrl = "http://localhost:3000";
 const characterService = new CharacterService(_baseUrl);
 const likeService = new LikeService(_baseUrl);
-const commentService = new commentService(_baseUrl);
-const userService = new userService(_baseUrl);
+const commentService = new CommentService(_baseUrl);
+const userService = new UserService(_baseUrl);
 // const characterService = new CharacterService("http://gateway.marvel.com/v1/public/characters");
 
 const header = document.querySelector(".header");
@@ -49,9 +49,13 @@ User.sideNav.addEventListener("click", event => {
     }
 })
 
-function addMoreInfoButtonListener() {
-    const infoButtons = document.getElementsByClassName("more-info-btn");
-    for (const button of infoButtons) {
-        button.addEventListener("click", event => characterService.getMoreInfo(event));
+function getMoreInfo(event) {
+    const id = event.target.parentElement.parentElement.parentElement.parentElement.dataset.id;
+    if (event.target.parentElement.previousElementSibling.querySelector("h2").className === "collection-character") {
+        characterService.getInfoCollectionCharacter(id);
+    }
+    if (event.target.parentElement.previousElementSibling.querySelector("h2").className === "marvel-collection") {
+        characterService.getInfoMarvelCharacter(id);
     }
 }
+

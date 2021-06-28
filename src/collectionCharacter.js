@@ -31,7 +31,7 @@ class CollectionCharacter {
                     <p>${this.description}</p>
                     <button class="remove-collection-btn">Remove From My Collection</button>
                     <button class="comment-collection-btn">Add Comment</button>
-                    <button class="more-info-btn">See More Information</button>
+                    <button class="more-info-coll-btn">See More Information</button>
                     <p id="likes-text">${this.like}</p>
                 </div>
             </div>
@@ -45,7 +45,7 @@ class CollectionCharacter {
         characterDiv.appendChild(this.createDiv());
         CollectionCharacter.addRemoveFromCollectionButtonListener();
         CollectionCharacter.addCommentCollectionButtonListener();
-        addMoreInfoButtonListener();
+        CollectionCharacter.addMoreInfoButtonListener();
         CollectionCharacter.addHeartListener();
     }
 
@@ -120,28 +120,17 @@ class CollectionCharacter {
             button.addEventListener("click", event => Comment.addCollectionCharacterComment(event));
         }
     }
+
+    static addMoreInfoButtonListener() {
+        const infoButtons = document.getElementsByClassName("more-info-coll-btn");
+        for (const button of infoButtons) {
+            button.addEventListener("click", event => getMoreInfo(event));
+        }
+    }
     
     static removeCharacterDiv(div, character) {
         div.remove();
         alert(`${character.data.attributes.name} was removed from your character collection!`)
-    }
-
-    static addUpdatedLikeCollectionCharacter(character, like_status) {
-        characterDiv.innerHTML = "";
-        commentsDiv.innerHTML = "";
-
-        let id = character.id;
-        let name = character.name;
-        let description = character.description;
-        let thumbnail = character.thumbnail;
-        let urls = character.urls;
-        let comics = null;
-        let events = null;
-        let series = null;
-        let like = (like_status === undefined ? undefined : like_status);
-        let user_id = 1;
-        
-        new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, user_id);
     }
 
     // user can only leave one comment per character
@@ -169,6 +158,79 @@ class CollectionCharacter {
                 new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, user_id);
             })
         }
+    }
+
+    static displayExtraInfoCollectionCharacter(character) {
+        characterDiv.innerHTML = "";
+        commentsDiv.innerHTML = "";
+
+        let id = character.data.id;
+        let name = character.data.attributes.name;
+        let description = character.data.attributes.description;
+        let thumbnail = character.data.attributes.thumbnail;
+        let urls = character.data.attributes.urls;
+        let comics = character.data.attributes.comics;
+        let events = character.data.attributes.events;
+        let series = character.data.attributes.series;
+        let likes = character.data.attributes.likes.find(like => like.user_id === 1);
+        let like = (likes === undefined ? undefined : likes.like_status);
+        let user_id = 1;
+
+        let c = new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, user_id);
+
+        const div2 = document.createElement("div");
+        div2.innerHTML = `
+        <div class="info-card">
+            <div class="info-card-inner">
+                <h2>${c.name} Comic Appearances</h2>
+                <ul>
+                <p>${c.comics.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> ")}</p>
+                </ul>
+            </div>
+        </div>
+        <br><br>
+        `
+        div2.dataset.id = c.id;
+    
+        const div3 = document.createElement("div");
+        div3.innerHTML = `
+        <div class="info-card">
+            <div class="info-card-inner">
+                <h2>${c.name} Event Appearances</h2>
+                <ul>
+                <p>${c.events.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "</li> ")}</p>
+                </ul>
+            </div>
+        </div>
+        <br><br>
+        `
+        div3.dataset.id = c.id;
+    
+        const div4 = document.createElement("div");
+        div4.innerHTML = `
+        <div class="info-card">
+            <div class="info-card-inner">
+                <h2>${c.name} Series Appearances</h2>
+                <ul>
+                <p>${c.series.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> ")}</p>
+                </ul>
+            </div>
+        </div>
+        <br><br>
+        `
+        div4.dataset.id = c.id;
+
+        characterDiv.appendChild(div2);
+        characterDiv.appendChild(div3);
+        characterDiv.appendChild(div4);
+    }
+
+    static addExtraInfoCollectionCharacter(character) {
+        CollectionCharacter.displayExtraInfoCollectionCharacter(character);
+    
+        document.querySelector(".comment-collection-btn").remove();
+        document.querySelector(".more-info-coll-btn").remove();
+        getCollectionCharacterComments(character);
     }
 
 }
