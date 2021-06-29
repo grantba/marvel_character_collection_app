@@ -39,6 +39,8 @@ class MarvelCharacter {
 
     displayMarvelCharacter() {
         characterDiv.appendChild(this.createDiv());
+        MarvelCharacter.addCollectionButtonListener();
+        MarvelCharacter.addMoreInfoButtonListener();
     }
     
     static displaySearchForm() {
@@ -78,8 +80,6 @@ class MarvelCharacter {
 
                     new MarvelCharacter(id, name, description, thumbnail, urls);
                 })
-            MarvelCharacter.addCollectionButtonListener();
-            MarvelCharacter.addMoreInfoButtonListener();
             }
         }
         else {
@@ -99,6 +99,86 @@ class MarvelCharacter {
         for (const button of infoButtons) {
             button.addEventListener("click", event => getMoreInfo(event));
         }
+    }
+
+    static addExtraInfoMarvelCharacter(characterInfo) {
+        characterDiv.innerHTML = "";
+        commentsDiv.innerHTML = "";
+
+        let id = characterInfo['data']["results"][0]['id'];
+        let name = characterInfo['data']["results"][0]['name'];
+        let description = characterInfo['data']["results"][0]['description'];
+        let thumbnail = characterInfo['data']["results"][0]['thumbnail']['path'] + "/portrait_fantastic." + characterInfo['data']["results"][0]['thumbnail']['extension'];
+        let urls = characterInfo['data']['results'][0]['urls'][0]['url'];
+        let comicsList = characterInfo['data']["results"][0]['comics']['items'];
+        let comicsArray = comicsList.map(comic => {
+            return `=>${comic.name}`;
+        }) 
+        let comicsString = comicsArray.toString();
+        let comics = comicsString.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> ");
+        let eventsList = characterInfo['data']["results"][0]['events']['items'];
+        let eventsArray = eventsList.map(event => {
+            return `=>${event.name}`;
+        }) 
+        let eventsString = eventsArray.toString();
+        let events = eventsString.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> ");
+        let seriesList = characterInfo['data']["results"][0]['series']['items'];
+        let seriesArray = seriesList.map(series => {
+            return `=>${series.name}`;
+        }) 
+        let seriesString = seriesArray.toString();
+        let series = seriesString.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> ");
+
+        new MarvelCharacter(id, name, description, thumbnail, urls, comics, events, series).displayExtraInfoMarvelCharacter();
+    }
+
+    displayExtraInfoMarvelCharacter() {  
+        const div2 = document.createElement("div");
+        div2.innerHTML = `
+        <div class="info-card">
+            <div class="info-card-inner">
+                <h2>${this.name} Comic Appearances</h2>
+                <ul>
+                <p>${this.comics}</p>
+                </ul>
+            </div>
+        </div>
+        <br><br>
+        `
+        div2.dataset.id = this.id;
+    
+        const div3 = document.createElement("div");
+        div3.innerHTML = `
+        <div class="info-card">
+            <div class="info-card-inner">
+                <h2>${this.name} Event Appearances</h2>
+                <ul>
+                <p>${this.events}</p>
+                </ul>
+            </div>
+        </div>
+        <br><br>
+        `
+        div3.dataset.id = this.id;
+    
+        const div4 = document.createElement("div");
+        div4.innerHTML = `
+        <div class="info-card">
+            <div class="info-card-inner">
+                <h2>${this.name} Series Appearances</h2>
+                <ul>
+                <p>${this.series}</p>
+                </ul>
+            </div>
+        </div>
+        <br><br>
+        `
+        div4.dataset.id = this.id;
+    
+        document.querySelector(".more-info-btn").remove();
+        characterDiv.appendChild(div2);
+        characterDiv.appendChild(div3);
+        characterDiv.appendChild(div4);
     }
 
 }

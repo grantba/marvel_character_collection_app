@@ -79,7 +79,7 @@ class CollectionCharacter {
         }
     }
 
-    static addCollectionCharacter(character) {
+    static addSingleCollectionCharacter(character) {
         alert(`${character.data.attributes.name} was added to your character collection!`)
         characterDiv.innerHTML = "";
         commentsDiv.innerHTML = "";
@@ -126,11 +126,6 @@ class CollectionCharacter {
         for (const button of infoButtons) {
             button.addEventListener("click", event => getMoreInfo(event));
         }
-    }
-    
-    static removeCharacterDiv(div, character) {
-        div.remove();
-        alert(`${character.data.attributes.name} was removed from your character collection!`)
     }
 
     // user can only leave one comment per character
@@ -198,7 +193,7 @@ class CollectionCharacter {
             <div class="info-card-inner">
                 <h2>${c.name} Event Appearances</h2>
                 <ul>
-                <p>${c.events.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "</li> ")}</p>
+                <p>${c.events.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> ")}</p>
                 </ul>
             </div>
         </div>

@@ -58,6 +58,31 @@ class CharacterService {
         });
     }
 
+    getInfoMarvelCharacter(id) {
+        const ts = Number(new Date());
+        const hash = md5(ts + _PRIVATE_KEY + _PUBLIC_KEY);
+    
+        const params = {
+            "id": id,
+            "ts": ts,
+            "hash": hash
+        }
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(params)
+        }
+    
+        fetch(`${this.url}/search_by_id`, options)
+        .then(resp => resp.json())
+        .then(characterInfo => MarvelCharacter.addExtraInfoMarvelCharacter(characterInfo))
+        .catch(() => {
+            alert("There was an issue getting this information. Please try again.")
+        });
+    }
+
     addCharacterToCollection(name, description, thumbnail, urls, comics, events, series) {
         const params = {
             "name": name,
@@ -80,7 +105,7 @@ class CharacterService {
     
         fetch(`${this.url}/characters`, options)
         .then(resp => resp.json())
-        .then(character => {CollectionCharacter.addCollectionCharacter(character)})
+        .then(character => {CollectionCharacter.addSingleCollectionCharacter(character)})
         .catch(error => {
             alert(`There was an issue adding this character to your collection due to ${error}. Please try again.`)
         });
@@ -89,14 +114,17 @@ class CharacterService {
     removeCollectionCharacter(event) {
         const id = event.target.parentElement.parentElement.parentElement.parentElement.dataset.id;
         const div = event.target.parentElement.parentElement.parentElement.parentElement;
-    
+        const name = event.target.parentElement.getElementsByTagName("h2")[0].innerText;
+
         const options = {
             method: "DELETE",
         }
     
         fetch(`${this.url}/characters/${id}`, options)
         .then(resp => resp.json())
-        .then(character => {CollectionCharacter.removeCharacterDiv(div, character)})
+        .then(() => {
+            div.remove();
+            alert(`${name} was removed from your character collection!`)})
         .catch(error => {
             alert(`There was an issue removing this character from your collection due to ${error}. Please try again.`)
         });
