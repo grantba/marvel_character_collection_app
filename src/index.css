@@ -196,3 +196,28 @@ button {
     padding-bottom:15px;
     text-align: center;
 }
+
+#comment-card {
+    background: #080808;
+    color: rgb(247, 239, 239);
+    border-radius: 25px;
+    padding: 20px;
+    padding-top: 10px;
+    height: auto;
+}
+
+#comment-card-inner {
+    width: 100%;
+    min-height: 100px;
+    overflow: hidden;
+    text-align: center;
+}
+
+#comment-card-inner h2 {
+    border-bottom: 2px solid #CCC;
+    padding-bottom:15px;
+    text-align: center;
+}
+
+
+

@@ -171,49 +171,51 @@ class CollectionCharacter {
         let like = (likes === undefined ? undefined : likes.like_status);
         let user_id = 1;
 
-        let c = new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, user_id);
+        new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, user_id).displayExtraInfoDivs();
+    }
 
+    displayExtraInfoDivs() {
         const div2 = document.createElement("div");
         div2.innerHTML = `
         <div class="info-card">
             <div class="info-card-inner">
-                <h2>${c.name} Comic Appearances</h2>
+                <h2>${this.name} Comic Appearances</h2>
                 <ul>
-                <p>${c.comics.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> ")}</p>
+                <p>${this.comics.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> ")}</p>
                 </ul>
             </div>
         </div>
         <br><br>
         `
-        div2.dataset.id = c.id;
+        div2.dataset.id = this.id;
     
         const div3 = document.createElement("div");
         div3.innerHTML = `
         <div class="info-card">
             <div class="info-card-inner">
-                <h2>${c.name} Event Appearances</h2>
+                <h2>${this.name} Event Appearances</h2>
                 <ul>
-                <p>${c.events.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> ")}</p>
+                <p>${this.events.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> ")}</p>
                 </ul>
             </div>
         </div>
         <br><br>
         `
-        div3.dataset.id = c.id;
+        div3.dataset.id = this.id;
     
         const div4 = document.createElement("div");
         div4.innerHTML = `
         <div class="info-card">
             <div class="info-card-inner">
-                <h2>${c.name} Series Appearances</h2>
+                <h2>${this.name} Series Appearances</h2>
                 <ul>
-                <p>${c.series.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> ")}</p>
+                <p>${this.series.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> ")}</p>
                 </ul>
             </div>
         </div>
         <br><br>
         `
-        div4.dataset.id = c.id;
+        div4.dataset.id = this.id;
 
         characterDiv.appendChild(div2);
         characterDiv.appendChild(div3);
@@ -225,7 +227,59 @@ class CollectionCharacter {
     
         document.querySelector(".comment-collection-btn").remove();
         document.querySelector(".more-info-coll-btn").remove();
-        getCollectionCharacterComments(character);
+
+        CollectionCharacter.displayCollectionCharacterComments(character);
+    }
+
+    static displayCollectionCharacterComments(character) {
+        const comments = character.data.attributes.comments;
+        const ul = document.createElement("ul");
+    
+        if (comments.length === 0) {
+            const li = document.createElement("li");
+            li.innerText = "This character currently has no comments but you could be the first to add one!"
+            ul.appendChild(li);
+        }
+        else {
+            comments.forEach(comment => {
+                const li = document.createElement("li");
+                li.innerText = `${comment.description}\n\n`;
+                ul.appendChild(li);
+            })
+        }
+
+        const div = document.createElement("div");
+        const likes = character.data.attributes.likes;
+
+        let totalLikes = 0;
+        let totalDislikes = 0;
+
+        likes.forEach(like => {
+            if (like.like_status === true) {
+                totalLikes += 1;
+            }
+            if (like.like_status === false) {
+                totalDislikes += 1;
+            }
+        })
+    
+        const like = (`${totalLikes} like${totalLikes !== 1 ? 's' : ''}`);
+        const dislike = (`${totalDislikes} dislike${totalDislikes !== 1 ? 's' : ''}`);
+        const name = character.data.attributes.name;
+
+        const cardContent = `
+        <div id="comment-card">
+            <div id="comment-card-inner">
+                <h2>${name} Comments</h2>
+                <h3 class="left-align">❤️ ${name} has a total of ${like}. ❤️</h3>
+                <h3 class="right-align">🖤 ${name} has a total of ${dislike}. 🖤</h3>
+                <br><br><br>${ul.innerHTML}
+            </div>
+        </div>
+        `
+    
+        div.innerHTML = cardContent;
+        commentsDiv.appendChild(div);
     }
 
 }
