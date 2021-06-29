@@ -20,7 +20,7 @@ class LikeService {
         }
         fetch(`${this.url}/likes/${character_id}`, options)
         .then(resp => resp.json())
-        .then(characterService.getCollectionCharacters())
+        // .then(characterService.getCollectionCharacters())
             // const characterInfo = result.data.attributes.character || result.data[0].attributes.like_status;
             // const likes = result.data.attributes.like_status || result.data[0].attributes.like_status;
             // CollectionCharacter.addUpdatedLikeCollectionCharacter(characterInfo, likes)})

@@ -28,7 +28,7 @@ class CharacterService {
             alert("That character was not found. Please try again.")
         });
     
-        const characterSearchForm = document.getElementById("marvel-character-search-form");
+        const characterSearchForm = document.getElementById("form");
         characterSearchForm.reset();
     }
 

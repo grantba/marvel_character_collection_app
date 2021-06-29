@@ -7,7 +7,6 @@ const characterService = new CharacterService(_baseUrl);
 const likeService = new LikeService(_baseUrl);
 const commentService = new CommentService(_baseUrl);
 const userService = new UserService(_baseUrl);
-// const characterService = new CharacterService("http://gateway.marvel.com/v1/public/characters");
 
 const header = document.querySelector(".header");
 const contentArea = document.getElementById("content");

@@ -103,7 +103,7 @@ body {
     background-color: #2196F3; /* Blue */
 }
 
-#marvel-character-search-form {
+#form {
     color: white;
     border-radius: 25px;
     background: #080808;
@@ -218,6 +218,27 @@ button {
     padding-bottom:15px;
     text-align: center;
 }
+
+#likes-text {
+    color: white;
+}
+
+.like:hover {
+  color: red;
+}
+
+.unlike:hover {
+  color: rgb(13, 14, 14);
+}
+
+.left-align {
+  float: left;
+}
+
+.right-align {
+  float: right;
+}
+
 
 
 

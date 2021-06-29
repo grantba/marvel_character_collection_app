@@ -225,8 +225,8 @@ class CollectionCharacter {
     static addExtraInfoCollectionCharacter(character) {
         CollectionCharacter.displayExtraInfoCollectionCharacter(character);
     
-        document.querySelector(".comment-collection-btn").remove();
         document.querySelector(".more-info-coll-btn").remove();
+        document.querySelector("#likes-text").remove();
 
         CollectionCharacter.displayCollectionCharacterComments(character);
     }
