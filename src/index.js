@@ -9,10 +9,10 @@ const commentService = new CommentService(_baseUrl);
 const userService = new UserService(_baseUrl);
 
 const header = document.querySelector(".header");
-const contentArea = document.getElementById("content");
+// const contentArea = document.getElementById("content");
 const characterDiv = document.getElementById("character-container");
 const commentsDiv = document.getElementById("comments-container");
-const searchButton = document.getElementById("search-btn");
+// const searchButton = document.getElementById("search-btn");
 
 function addHeaderContent() {
     const headerContent = `
@@ -44,7 +44,7 @@ User.sideNav.addEventListener("click", event => {
         characterService.getCollectionCharacters();
     }
     if (event.target.id === "my-comments") {
-        commentService.getComments();
+        commentService.getUserComments();
     }
 })
 

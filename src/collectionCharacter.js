@@ -128,7 +128,6 @@ class CollectionCharacter {
         }
     }
 
-    // user can only leave one comment per character
     static addCollectionCharacters(characters) {
         characterDiv.innerHTML = "";
         commentsDiv.innerHTML = "";

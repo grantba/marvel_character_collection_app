@@ -4,9 +4,13 @@ class CommentService {
         this.url = url
     }
 
-    getComments() {
-        debugger;
-        commentsDiv.innerHTML = "";
+    getUserComments() {
+        fetch(`${this.url}/comments`)
+        .then(resp => resp.json())
+        .then(comments => {Comment.addUserComments(comments)})
+        .catch((error) => {
+            alert(`There was an issue getting the comments for your collection characters due to ${error}. Please try again.`)
+        });
     }
 
     updateCharacterComments(description, characterId, user_id, name) {
