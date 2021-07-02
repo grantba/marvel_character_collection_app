@@ -4,7 +4,8 @@ class User {
     static signupButton = document.getElementById("signup-btn");
     static sideNav = document.querySelector(".sidenav");
 
-    constructor(username, email, bio, image) {
+    constructor(id, username, email, bio, image) {
+        this.id = id;
         this.username = username;
         this.email = email;
         this.bio = bio;

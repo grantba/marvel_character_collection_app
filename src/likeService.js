@@ -4,12 +4,12 @@ class LikeService {
         this.url = url
     }
 
-    updateCharacterLikeStatus(like_status, user_id, character_id, name) {
+    updateCharacterLikeStatus(likeStatus, userId, characterId, name) {
         const params = {
-            "like_status": like_status,
-            "user_id": user_id,
+            "like_status": likeStatus,
+            "user_id": userId,
             // added user id for now, will change later
-            "character_id": character_id
+            "character_id": characterId
         }
         const options = {
             method: "PATCH",
@@ -18,7 +18,7 @@ class LikeService {
             },
             body: JSON.stringify(params)
         }
-        fetch(`${this.url}/likes/${character_id}`, options)
+        fetch(`${this.url}/likes/${characterId}`, options)
         .then(resp => resp.json())
         // .then(characterService.getCollectionCharacters())
             // const characterInfo = result.data.attributes.character || result.data[0].attributes.like_status;

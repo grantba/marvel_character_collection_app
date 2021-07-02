@@ -13,10 +13,10 @@ class CommentService {
         });
     }
 
-    addCharacterComment(description, characterId, user_id, name) {
+    addCharacterComment(description, characterId, userId, name) {
         const params = {
             "description": description,
-            "user_id": user_id,
+            "user_id": userId,
             // added user id for now, will change later
             "character_id": characterId
         }
@@ -37,10 +37,10 @@ class CommentService {
         });
     }
 
-    editCharacterComment(editDescription, characterId, user_id, commentId, characterName) {
+    editCharacterComment(editDescription, characterId, userId, commentId, characterName) {
         const params = {
             "description": editDescription,
-            "user_id": user_id,
+            "user_id": userId,
             // added user id for now, will change later
             "character_id": characterId
         }
@@ -57,7 +57,7 @@ class CommentService {
             alert(`Your comment for ${characterName} was successfully updated.`)
             commentService.getUserComments()})
         .catch(error => {
-            alert(`There was an issue adding this description to your character, ${name}, due to ${error}. Please try again.`)
+            alert(`There was an issue adding this description to your character, ${characterName}, due to ${error}. Please try again.`)
         });
     }
 

@@ -21,16 +21,16 @@ class Comment {
             event.preventDefault();
             const description = document.getElementById("character-description").value;
             // const characterId = parseInt(document.getElementById("character-id").value);
-            const user_id = 1;
-            commentService.addCharacterComment(description, characterId, user_id, name);
+            const userId = 1;
+            commentService.addCharacterComment(description, characterId, userId, name);
         });
     }
 
     static addUserComments(comments) {
-        const user_id = 1;
-        let username = comments.data[0].attributes.user.username;
+        const userId = 1;
+        // let username = comments.data[0].attributes.user.username;
 
-        const ul = document.createElement("ul");
+        // const ul = document.createElement("ul");
         const div = document.createElement("div");
         div.innerHTML = `
             <h2 id="user-comment-card-inner">Your Character Comments</h2>
@@ -42,7 +42,7 @@ class Comment {
         }
         else {
             comments.data.forEach(comment => {
-                if (comment.attributes.user.id === user_id) {
+                if (comment.attributes.user.id === userId) {
                     let commentId = comment.id;
                     let commentDescription = comment.attributes.description;
                     let characterName = comment.attributes.character.name;
@@ -104,8 +104,8 @@ class Comment {
         characterCommentForm.addEventListener("submit", event => {
             event.preventDefault();
             const editDescription = document.getElementById("character-description").value;
-            const user_id = 1;
-            commentService.editCharacterComment(editDescription, characterId, user_id, commentId, characterName);
+            const userId = 1;
+            commentService.editCharacterComment(editDescription, characterId, userId, commentId, characterName);
         });
     }
 
@@ -115,7 +115,7 @@ class Comment {
     
         if (comments.length === 0) {
             const li = document.createElement("li");
-            li.innerText = "This character currently has no comments but you could be the first to add one!"
+            li.innerText = "This character currently has no comments but you could be the first to add one!\n\n"
             ul.appendChild(li);
         }
         else {

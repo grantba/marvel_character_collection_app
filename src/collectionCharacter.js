@@ -1,6 +1,6 @@
 class CollectionCharacter {
 
-    constructor(id, name, description, thumbnail, urls, comics, events, series, like, user_id) {
+    constructor(id, name, description, thumbnail, urls, comics, events, series, like, userId) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -10,7 +10,7 @@ class CollectionCharacter {
         this.events = events;
         this.series = series;
         this.like = Like.updateLikeStatus(like);
-        this.user_id = user_id;
+        this.userId = userId;
 
         this.element = document.createElement("div");
         this.element.dataset.id = this.id;
@@ -118,9 +118,9 @@ class CollectionCharacter {
         let events = null;
         let series = null;
         let like = null;
-        let user_id = 1;
+        let userId = 1;
         
-        new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, user_id);
+        new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, userId);
         CollectionCharacter.addRemoveFromCollectionButtonListener();
         CollectionCharacter.addCommentCollectionButtonListener();
         CollectionCharacter.addMoreInfoButtonListener();
@@ -146,9 +146,9 @@ class CollectionCharacter {
                 let comics = null;
                 let events = null;
                 let series = null;
-                let user_id = 1;
+                let userId = 1;
 
-                new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, user_id);
+                new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, userId);
             })
             CollectionCharacter.addRemoveFromCollectionButtonListener();
             CollectionCharacter.addCommentCollectionButtonListener();
@@ -171,9 +171,9 @@ class CollectionCharacter {
         let series = character.data.attributes.series;
         let likes = character.data.attributes.likes.find(like => like.user_id === 1);
         let like = (likes === undefined ? undefined : likes.like_status);
-        let user_id = 1;
+        let userId = 1;
 
-        new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, user_id).displayExtraInfoDivs();
+        new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, userId).displayExtraInfoDivs();
         CollectionCharacter.addRemoveFromCollectionButtonListener();
         CollectionCharacter.addCommentCollectionButtonListener();
         CollectionCharacter.addMoreInfoButtonListener();

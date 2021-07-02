@@ -1,6 +1,6 @@
 class MarvelCharacter {
 
-    constructor(id, name, description, thumbnail, urls, comics, events, series, user_id) {
+    constructor(id, name, description, thumbnail, urls, comics, events, series, userId) {
         this.id = id;
         this.name = name;
         this.description = description;
