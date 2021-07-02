@@ -17,6 +17,40 @@ class CollectionCharacter {
         this.displayCollectionCharacter();
     }
 
+    static addHeartListener() {
+        const likes = document.getElementsByClassName("like");
+        for (const like of likes) {
+            like.addEventListener("click", event => Like.changeLikeStatus(event))};
+        const unlikes = document.getElementsByClassName("unlike");
+        for (const unlike of unlikes) {
+            unlike.addEventListener("click", event => Like.changeUnlikeStatus(event))};
+    }
+    
+    static addRemoveFromCollectionButtonListener() {
+        const collButtons = document.getElementsByClassName("remove-collection-btn");
+        for (const button of collButtons) {
+            button.addEventListener("click", event => characterService.removeCollectionCharacter(event));
+        }
+    }
+
+    static addCommentCollectionButtonListener() {
+        const commentButtons = document.getElementsByClassName("comment-collection-btn");
+        for (const button of commentButtons) {
+            button.addEventListener("click", event => Comment.addCollectionCharacterComment(event));
+        }
+    }
+
+    static addMoreInfoButtonListener() {
+        const infoButtons = document.getElementsByClassName("more-info-coll-btn");
+        for (const button of infoButtons) {
+            button.addEventListener("click", event => getMoreInfo(event));
+        }
+    }
+
+    displayCollectionCharacter() {
+        characterDiv.appendChild(this.createDiv());
+    }
+
     createDiv() {
         this.element.innerHTML = `
         <div class="flip-card">
@@ -27,7 +61,7 @@ class CollectionCharacter {
                 </div>
                 <div class="flip-card-back">
                     <h2>${this.name}</h2>
-                    <a href=${this.urls} target="_blank" style="text-decoration: none">Marvel Link</a>
+                    <a href=${this.urls} id="marvel-link" target="_blank">Marvel Link</a>
                     <p>${this.description}</p>
                     <button class="remove-collection-btn">Remove From My Collection</button>
                     <button class="comment-collection-btn">Add Comment</button>
@@ -39,14 +73,6 @@ class CollectionCharacter {
         <br><br>
         `
         return this.element;
-    }
-
-    displayCollectionCharacter() {
-        characterDiv.appendChild(this.createDiv());
-        CollectionCharacter.addRemoveFromCollectionButtonListener();
-        CollectionCharacter.addCommentCollectionButtonListener();
-        CollectionCharacter.addMoreInfoButtonListener();
-        CollectionCharacter.addHeartListener();
     }
 
     static createCollectionCharacter(characterInfo) {
@@ -80,7 +106,6 @@ class CollectionCharacter {
     }
 
     static addSingleCollectionCharacter(character) {
-        alert(`${character.data.attributes.name} was added to your character collection!`)
         characterDiv.innerHTML = "";
         commentsDiv.innerHTML = "";
 
@@ -96,36 +121,10 @@ class CollectionCharacter {
         let user_id = 1;
         
         new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, user_id);
-    }
-
-    static addHeartListener() {
-        const likes = document.getElementsByClassName("like");
-        for (const like of likes) {
-            like.addEventListener("click", event => Like.changeLikeStatus(event))};
-        const unlikes = document.getElementsByClassName("unlike");
-        for (const unlike of unlikes) {
-            unlike.addEventListener("click", event => Like.changeUnlikeStatus(event))};
-    }
-    
-    static addRemoveFromCollectionButtonListener() {
-        const collButtons = document.getElementsByClassName("remove-collection-btn");
-        for (const button of collButtons) {
-            button.addEventListener("click", event => characterService.removeCollectionCharacter(event));
-        }
-    }
-
-    static addCommentCollectionButtonListener() {
-        const commentButtons = document.getElementsByClassName("comment-collection-btn");
-        for (const button of commentButtons) {
-            button.addEventListener("click", event => Comment.addCollectionCharacterComment(event));
-        }
-    }
-
-    static addMoreInfoButtonListener() {
-        const infoButtons = document.getElementsByClassName("more-info-coll-btn");
-        for (const button of infoButtons) {
-            button.addEventListener("click", event => getMoreInfo(event));
-        }
+        CollectionCharacter.addRemoveFromCollectionButtonListener();
+        CollectionCharacter.addCommentCollectionButtonListener();
+        CollectionCharacter.addMoreInfoButtonListener();
+        CollectionCharacter.addHeartListener();
     }
 
     static addCollectionCharacters(characters) {
@@ -151,6 +150,10 @@ class CollectionCharacter {
 
                 new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, user_id);
             })
+            CollectionCharacter.addRemoveFromCollectionButtonListener();
+            CollectionCharacter.addCommentCollectionButtonListener();
+            CollectionCharacter.addMoreInfoButtonListener();
+            CollectionCharacter.addHeartListener();
         }
     }
 
@@ -171,16 +174,24 @@ class CollectionCharacter {
         let user_id = 1;
 
         new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, user_id).displayExtraInfoDivs();
+        CollectionCharacter.addRemoveFromCollectionButtonListener();
+        CollectionCharacter.addCommentCollectionButtonListener();
+        CollectionCharacter.addMoreInfoButtonListener();
+        CollectionCharacter.addHeartListener();
     }
 
     displayExtraInfoDivs() {
+        const comicsList = (this.comics.length === 0 ? "<li>Unfortunately, this character has had no comic appearances yet. Contact Marvel and tell them how you feel about this!<br><br>" : this.comics.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> "));
+        const eventsList = (this.events.length === 0 ? "<li>Unfortunately, this character has had no event appearances yet. Contact Marvel and tell them how you feel about this!<br><br>" : this.events.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> "));
+        const seriesList = (this.series.length === 0 ? "<li>Unfortunately, this character has had no series appearances yet. Contact Marvel and tell them how you feel about this!<br><br>" : this.series.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> "));
+
         const div2 = document.createElement("div");
         div2.innerHTML = `
         <div class="info-card">
             <div class="info-card-inner">
                 <h2>${this.name} Comic Appearances</h2>
                 <ul>
-                <p>${this.comics.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> ")}</p>
+                <p>${comicsList}</p>
                 </ul>
             </div>
         </div>
@@ -194,7 +205,7 @@ class CollectionCharacter {
             <div class="info-card-inner">
                 <h2>${this.name} Event Appearances</h2>
                 <ul>
-                <p>${this.events.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> ")}</p>
+                <p>${eventsList}</p>
                 </ul>
             </div>
         </div>
@@ -208,7 +219,7 @@ class CollectionCharacter {
             <div class="info-card-inner">
                 <h2>${this.name} Series Appearances</h2>
                 <ul>
-                <p>${this.series.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> ")}</p>
+                <p>${seriesList}</p>
                 </ul>
             </div>
         </div>
@@ -227,58 +238,7 @@ class CollectionCharacter {
         document.querySelector(".more-info-coll-btn").remove();
         document.querySelector("#likes-text").remove();
 
-        CollectionCharacter.displayCollectionCharacterComments(character);
-    }
-
-    static displayCollectionCharacterComments(character) {
-        const comments = character.data.attributes.comments;
-        const ul = document.createElement("ul");
-    
-        if (comments.length === 0) {
-            const li = document.createElement("li");
-            li.innerText = "This character currently has no comments but you could be the first to add one!"
-            ul.appendChild(li);
-        }
-        else {
-            comments.forEach(comment => {
-                const li = document.createElement("li");
-                li.innerText = `${comment.description}\n\n`;
-                ul.appendChild(li);
-            })
-        }
-
-        const div = document.createElement("div");
-        const likes = character.data.attributes.likes;
-
-        let totalLikes = 0;
-        let totalDislikes = 0;
-
-        likes.forEach(like => {
-            if (like.like_status === true) {
-                totalLikes += 1;
-            }
-            if (like.like_status === false) {
-                totalDislikes += 1;
-            }
-        })
-    
-        const like = (`${totalLikes} like${totalLikes !== 1 ? 's' : ''}`);
-        const dislike = (`${totalDislikes} dislike${totalDislikes !== 1 ? 's' : ''}`);
-        const name = character.data.attributes.name;
-
-        const cardContent = `
-        <div id="comment-card">
-            <div id="comment-card-inner">
-                <h2>${name} Comments</h2>
-                <h3 class="left-align">❤️ ${name} has a total of ${like}. ❤️</h3>
-                <h3 class="right-align">🖤 ${name} has a total of ${dislike}. 🖤</h3>
-                <br><br><br>${ul.innerHTML}
-            </div>
-        </div>
-        `
-    
-        div.innerHTML = cardContent;
-        commentsDiv.appendChild(div);
+        Comment.displayCollectionCharacterComments(character);
     }
 
 }

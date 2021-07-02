@@ -105,7 +105,9 @@ class CharacterService {
     
         fetch(`${this.url}/characters`, options)
         .then(resp => resp.json())
-        .then(character => {CollectionCharacter.addSingleCollectionCharacter(character)})
+        .then(character => {
+            alert(`${character.data.attributes.name} was added to your character collection!`)
+            CollectionCharacter.addSingleCollectionCharacter(character)})
         .catch(error => {
             alert(`There was an issue adding this character to your collection due to ${error}. Please try again.`)
         });
@@ -123,7 +125,12 @@ class CharacterService {
         fetch(`${this.url}/characters/${id}`, options)
         .then(resp => resp.json())
         .then(() => {
-            div.remove();
+            if (commentsDiv.innerHTML.length === 0) {
+                div.remove();
+            }
+            else {
+                characterService.getCollectionCharacters()
+            }
             alert(`${name} was removed from your character collection!`)})
         .catch(error => {
             alert(`There was an issue removing this character from your collection due to ${error}. Please try again.`)

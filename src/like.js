@@ -6,7 +6,7 @@ class Like {
         // need to update later
         const user_id = 1;
 
-        if (event.target.innerText === "Like ❤") {
+        if (event.target.innerText.includes("Like")) {
             event.target.innerText = "❤️";
             event.target.nextElementSibling.innerText = "";
             alert("You have liked this character!😊")
@@ -14,7 +14,7 @@ class Like {
             likeService.updateCharacterLikeStatus(like_status, user_id, character_id, name);
         }
         else {
-            event.target.innerText = "Like ❤";
+            event.target.innerText = "Like ❤ ";
             event.target.nextElementSibling.innerText = "Dislike ❤";
             alert("You no longer like this character.🙁")
             let like_status = null;

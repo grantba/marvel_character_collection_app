@@ -25,7 +25,7 @@ class MarvelCharacter {
                 </div>
                 <div class="flip-card-back">
                     <h2>${this.name}</h2>
-                    <a href=${this.urls} target="_blank" style="text-decoration: none">Marvel Link</a>
+                    <a href=${this.urls} id="marvel-link" target="_blank">Marvel Link</a>
                     <p>${this.description}</p>
                     <button class="collection-btn">Add to My Collection</button>
                     <button class="more-info-btn">See More Information</button>
@@ -39,8 +39,21 @@ class MarvelCharacter {
 
     displayMarvelCharacter() {
         characterDiv.appendChild(this.createDiv());
-        MarvelCharacter.addCollectionButtonListener();
-        MarvelCharacter.addMoreInfoButtonListener();
+    }
+
+    static addCollectionButtonListener() {
+        const collButtons = document.getElementsByClassName("collection-btn");
+        for (const button of collButtons) {
+            button.addEventListener("click", event => {characterService.getMarvelCharacterById(event)
+            });
+        }
+    }
+
+    static addMoreInfoButtonListener() {
+        const infoButtons = document.getElementsByClassName("more-info-btn");
+        for (const button of infoButtons) {
+            button.addEventListener("click", event => getMoreInfo(event));
+        }
     }
     
     static displaySearchForm() {
@@ -80,24 +93,12 @@ class MarvelCharacter {
 
                     new MarvelCharacter(id, name, description, thumbnail, urls);
                 })
+            MarvelCharacter.addCollectionButtonListener();
+            MarvelCharacter.addMoreInfoButtonListener();
             }
         }
         else {
             alert("That character was not found. Please try again.")
-        }
-    }
-
-    static addCollectionButtonListener() {
-        const collButtons = document.getElementsByClassName("collection-btn");
-        for (const button of collButtons) {
-            button.addEventListener("click", event => characterService.getMarvelCharacterById(event));
-        }
-    }
-
-    static addMoreInfoButtonListener() {
-        const infoButtons = document.getElementsByClassName("more-info-btn");
-        for (const button of infoButtons) {
-            button.addEventListener("click", event => getMoreInfo(event));
         }
     }
 
@@ -132,14 +133,18 @@ class MarvelCharacter {
         new MarvelCharacter(id, name, description, thumbnail, urls, comics, events, series).displayExtraInfoMarvelCharacter();
     }
 
-    displayExtraInfoMarvelCharacter() {  
+    displayExtraInfoMarvelCharacter() { 
+        const comicsList = (this.comics.length === 0 ? "<li>Unfortunately, this character has had no comic appearances yet. Contact Marvel and tell them how you feel about this!<br><br>" : this.comics.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> "));
+        const eventsList = (this.events.length === 0 ? "<li>Unfortunately, this character has had no event appearances yet. Contact Marvel and tell them how you feel about this!<br><br>" : this.events.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> "));
+        const seriesList = (this.series.length === 0 ? "<li>Unfortunately, this character has had no series appearances yet. Contact Marvel and tell them how you feel about this!<br><br>" : this.series.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> ")); 
+        
         const div2 = document.createElement("div");
         div2.innerHTML = `
         <div class="info-card">
             <div class="info-card-inner">
                 <h2>${this.name} Comic Appearances</h2>
                 <ul>
-                <p>${this.comics}</p>
+                <p>${comicsList}</p>
                 </ul>
             </div>
         </div>
@@ -153,7 +158,7 @@ class MarvelCharacter {
             <div class="info-card-inner">
                 <h2>${this.name} Event Appearances</h2>
                 <ul>
-                <p>${this.events}</p>
+                <p>${eventsList}</p>
                 </ul>
             </div>
         </div>
@@ -167,7 +172,7 @@ class MarvelCharacter {
             <div class="info-card-inner">
                 <h2>${this.name} Series Appearances</h2>
                 <ul>
-                <p>${this.series}</p>
+                <p>${seriesList}</p>
                 </ul>
             </div>
         </div>
@@ -179,6 +184,9 @@ class MarvelCharacter {
         characterDiv.appendChild(div2);
         characterDiv.appendChild(div3);
         characterDiv.appendChild(div4);
+
+        MarvelCharacter.addCollectionButtonListener();
+        MarvelCharacter.addMoreInfoButtonListener();
     }
 
 }
