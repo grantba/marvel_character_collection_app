@@ -27,7 +27,7 @@ class Comment {
     }
 
     static addUserComments(comments) {
-        const userId = 1;
+        const userId = "1";
         // let username = comments.data[0].attributes.user.username;
 
         // const ul = document.createElement("ul");
@@ -42,7 +42,7 @@ class Comment {
         }
         else {
             comments.data.forEach(comment => {
-                if (comment.attributes.user.id === userId) {
+                if (comment.relationships.user.data.id === userId) {
                     let commentId = comment.id;
                     let commentDescription = comment.attributes.description;
                     let characterName = comment.attributes.character.name;
