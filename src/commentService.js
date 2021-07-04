@@ -7,7 +7,7 @@ class CommentService {
     getUserComments() {
         fetch(`${this.url}/comments`)
         .then(resp => resp.json())
-        .then(comments => {Comment.addUserComments(comments)})
+        .then(commentsInfo => {Comment.addUserComments(commentsInfo)})
         .catch((error) => {
             alert(`There was an issue getting the comments for your collection characters due to ${error}. Please try again.`)
         });
@@ -17,7 +17,6 @@ class CommentService {
         const params = {
             "description": description,
             "user_id": userId,
-            // added user id for now, will change later
             "character_id": characterId
         }
         const options = {
@@ -41,7 +40,6 @@ class CommentService {
         const params = {
             "description": editDescription,
             "user_id": userId,
-            // added user id for now, will change later
             "character_id": characterId
         }
         const options = {

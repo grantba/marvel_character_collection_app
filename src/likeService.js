@@ -4,11 +4,20 @@ class LikeService {
         this.url = url
     }
 
+    getAllLikes(character) {
+        const characterInfo = character;
+        fetch(`${this.url}/likes`)
+        .then(resp => resp.json())
+        .then(allLikes => {Comment.displayCollectionCharacterComments(allLikes, characterInfo)})
+        .catch((error) => {
+            alert(`There was an issue getting all this character's likes due to ${error}. Please try again.`)
+        });
+    }
+
     updateCharacterLikeStatus(likeStatus, userId, characterId, name) {
         const params = {
             "like_status": likeStatus,
             "user_id": userId,
-            // added user id for now, will change later
             "character_id": characterId
         }
         const options = {

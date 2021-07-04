@@ -3,6 +3,7 @@ class Comment {
     static addCollectionCharacterComment(event) {
         const characterId = event.target.parentElement.parentElement.parentElement.parentElement.dataset.id;
         const name = event.target.parentElement.parentElement.parentElement.querySelector("h2").innerText;
+        const userId = localStorage.getItem('currentUser');
         
         const form = document.createElement("form");
         form.innerHTML = `
@@ -20,28 +21,25 @@ class Comment {
         characterCommentForm.addEventListener("submit", event => {
             event.preventDefault();
             const description = document.getElementById("character-description").value;
-            // const characterId = parseInt(document.getElementById("character-id").value);
-            const userId = 1;
             commentService.addCharacterComment(description, characterId, userId, name);
         });
     }
 
-    static addUserComments(comments) {
-        const userId = "1";
-        // let username = comments.data[0].attributes.user.username;
+    static addUserComments(commentsInfo) {
+        const userId = localStorage.getItem('currentUser');
+        const comments = commentsInfo.data.filter(comment => comment.relationships.user.data.id === userId);
 
-        // const ul = document.createElement("ul");
         const div = document.createElement("div");
         div.innerHTML = `
-            <h2 id="user-comment-card-inner">Your Character Comments</h2>
+            <h2 id="all-comments-header">Your Character Comments</h2>
             `
-        div.id = "user-comment-card";
+        div.id = "all-comments";
 
-        if (comments.data.length === 0) {
+        if (comments.length === 0) {
             alert("You have no comments created at this time. If you haven't added any characters to your collection yet, you will have the ability to create comments for each character, once you have added them to your collection.")
         }
         else {
-            comments.data.forEach(comment => {
+            comments.forEach(comment => {
                 if (comment.relationships.user.data.id === userId) {
                     let commentId = comment.id;
                     let commentDescription = comment.attributes.description;
@@ -87,6 +85,7 @@ class Comment {
         const characterId = parseInt(event.target.previousElementSibling.id.split("-").shift());
         const characterName = nameWithDescription.split(" - ").shift();
         const description = nameWithDescription.split(" - ").pop();
+        const userId = localStorage.getItem('currentUser');
 
         const form = document.createElement("form");
         form.innerHTML = `
@@ -104,12 +103,16 @@ class Comment {
         characterCommentForm.addEventListener("submit", event => {
             event.preventDefault();
             const editDescription = document.getElementById("character-description").value;
-            const userId = 1;
             commentService.editCharacterComment(editDescription, characterId, userId, commentId, characterName);
         });
     }
 
-    static displayCollectionCharacterComments(character) {
+    static getCollectionCharacterComments(character) {
+        likeService.getAllLikes(character);    
+    }
+
+    static displayCollectionCharacterComments(allLikes, character) {
+        const name = character.data.attributes.name;
         const comments = character.data.attributes.comments;
         const ul = document.createElement("ul");
     
@@ -127,23 +130,23 @@ class Comment {
         }
 
         const div = document.createElement("div");
-        const likes = character.data.attributes.likes;
+
+        const likes = allLikes.data.filter(like => like.attributes.character.name === name);
 
         let totalLikes = 0;
         let totalDislikes = 0;
 
         likes.forEach(like => {
-            if (like.like_status === true) {
+            if (like.attributes.like_status === true) {
                 totalLikes += 1;
             }
-            if (like.like_status === false) {
+            if (like.attributes.like_status === false) {
                 totalDislikes += 1;
             }
         })
     
         const like = (`${totalLikes} like${totalLikes !== 1 ? 's' : ''}`);
         const dislike = (`${totalDislikes} dislike${totalDislikes !== 1 ? 's' : ''}`);
-        const name = character.data.attributes.name;
 
         const cardContent = `
         <div id="comment-card">

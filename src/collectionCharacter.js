@@ -118,7 +118,7 @@ class CollectionCharacter {
         let events = null;
         let series = null;
         let like = null;
-        let userId = 1;
+        let userId = localStorage.getItem('currentUser');
         
         new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, userId);
         CollectionCharacter.addRemoveFromCollectionButtonListener();
@@ -127,10 +127,13 @@ class CollectionCharacter {
         CollectionCharacter.addHeartListener();
     }
 
-    static addCollectionCharacters(characters) {
+    static addCollectionCharacters(charactersInfo) {
+        const userId = localStorage.getItem('currentUser');
+        const characters = charactersInfo.filter(character => character.relationships.user.data.id === userId);
+
         characterDiv.innerHTML = "";
         commentsDiv.innerHTML = "";
-
+        
         if (characters.length === 0) {
             alert("You have no characters in your collection at this time!")
         }
@@ -141,12 +144,11 @@ class CollectionCharacter {
                 let description = character.attributes.description;
                 let thumbnail = character.attributes.thumbnail;
                 let urls = character.attributes.urls;
-                let likes = character.attributes.likes.find(like => like.user_id === 1);
+                let likes = character.attributes.likes.find(like => like.user_id === parseInt(userId));
                 let like = (likes === undefined ? undefined : likes.like_status);
                 let comics = null;
                 let events = null;
                 let series = null;
-                let userId = 1;
 
                 new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, userId);
             })
@@ -161,6 +163,7 @@ class CollectionCharacter {
         characterDiv.innerHTML = "";
         commentsDiv.innerHTML = "";
 
+        let userId = localStorage.getItem('currentUser');
         let id = character.data.id;
         let name = character.data.attributes.name;
         let description = character.data.attributes.description;
@@ -169,9 +172,8 @@ class CollectionCharacter {
         let comics = character.data.attributes.comics;
         let events = character.data.attributes.events;
         let series = character.data.attributes.series;
-        let likes = character.data.attributes.likes.find(like => like.user_id === 1);
+        let likes = character.data.attributes.likes.find(like => like.user_id === userId);
         let like = (likes === undefined ? undefined : likes.like_status);
-        let userId = 1;
 
         new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, userId).displayExtraInfoDivs();
         CollectionCharacter.addRemoveFromCollectionButtonListener();
@@ -238,7 +240,7 @@ class CollectionCharacter {
         document.querySelector(".more-info-coll-btn").remove();
         document.querySelector("#likes-text").remove();
 
-        Comment.displayCollectionCharacterComments(character);
+        Comment.getCollectionCharacterComments(character);
     }
 
 }

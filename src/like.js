@@ -3,8 +3,7 @@ class Like {
     static changeLikeStatus(event) {
         const characterId = parseInt(event.target.parentElement.parentElement.parentElement.parentElement.parentElement.dataset.id);
         const name = event.target.parentElement.parentElement.parentElement.querySelector(".collection-character").innerText;
-        // need to update later
-        const userId = 1;
+        const userId = localStorage.getItem('currentUser');
 
         if (event.target.innerText.includes("Like")) {
             event.target.innerText = "❤️";
@@ -25,8 +24,7 @@ class Like {
     static changeUnlikeStatus(event) {
         const characterId = parseInt(event.target.parentElement.parentElement.parentElement.parentElement.parentElement.dataset.id);
         const name = event.target.parentElement.parentElement.parentElement.querySelector(".collection-character").innerText;
-        // need to update later
-        const userId = 1;
+        const userId = localStorage.getItem('currentUser');
 
         if (event.target.innerText === "Dislike ❤") {
             event.target.innerText = "🖤";

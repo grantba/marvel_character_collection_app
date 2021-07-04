@@ -5,24 +5,48 @@ const commentService = new CommentService(_baseUrl);
 const userService = new UserService(_baseUrl);
 
 const header = document.querySelector(".header");
-// const contentArea = document.getElementById("content");
 const characterDiv = document.getElementById("character-container");
 const commentsDiv = document.getElementById("comments-container");
-// const searchButton = document.getElementById("search-btn");
 
 function addHeaderContent() {
-    const headerContent = `
-        <a href="#" class="logo">Welcome to the Marvel Character Collection App</a>
-        <div class="header-right">
-        <a id="search-characters" href="#">Search Characters</a>
-        <a href="#" id="login-btn">Login</a>
-        <a href="#"id="signup-btn">Signup</a>
-        </div>
-    `
-    header.innerHTML = headerContent;
+    if (localStorage.getItem('currentUser') === "null") {
+        characterDiv.innerHTML = "";
+        commentsDiv.innerHTML = "";
+        User.sideNav.innerHTML = "";
 
-    const searchCharacters = document.getElementById("search-characters");
-    searchCharacters.addEventListener("click", getCharacterSearchForm);
+        const headerContent = `
+            <a href="#" class="logo">Welcome to the Marvel Character Collection App</a>
+            <div class="header-right">
+            <a href="#" id="login-btn">Login</a>
+            <a href="#"id="signup-btn">Signup</a>
+            </div>
+        `
+        header.innerHTML = headerContent;
+
+        const logInButton = document.getElementById("login-btn");
+        logInButton.addEventListener("click", User.logInCurrentUser)
+
+        const signUpButton = document.getElementById("signup-btn");
+        signUpButton.addEventListener("click", User.signUpCurrentUser)
+
+        User.displaySignUpLogInMessage();
+    }
+    else {
+        const headerContent = `
+            <a href="#" class="logo">Welcome to the Marvel Character Collection App</a>
+            <div class="header-right">
+            <a id="search-characters" href="#">Search Characters</a>
+            <a href="#"id="logout-btn">Log Out</a>
+            </div>
+        `
+        header.innerHTML = headerContent;
+
+        const searchCharacters = document.getElementById("search-characters");
+        searchCharacters.addEventListener("click", getCharacterSearchForm);
+
+        const logOutButton = document.getElementById("logout-btn");
+        logOutButton.addEventListener("click", User.logOutCurrentUser)
+    }
 }
 
 addHeaderContent();
@@ -34,15 +58,6 @@ function getCharacterSearchForm() {
 }
 
 User.addSideNavContent();
-
-User.sideNav.addEventListener("click", event => {
-    if (event.target.id === "my-character-collection") {
-        characterService.getCollectionCharacters();
-    }
-    if (event.target.id === "my-comments") {
-        commentService.getUserComments();
-    }
-})
 
 function getMoreInfo(event) {
     const id = event.target.parentElement.parentElement.parentElement.parentElement.dataset.id;

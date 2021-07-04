@@ -92,8 +92,7 @@ class CharacterService {
             "comics": comics.toString(),
             "events": events.toString(),
             "series": series.toString(),
-            "user_id": 1
-            // added user id for now, will change later
+            "user_id": localStorage.getItem('currentUser')
         }
         const options = {
             method: "POST",
@@ -137,19 +136,10 @@ class CharacterService {
         });
     }
 
-    // getCollectionCharacter(id) {
-    //     fetch(`${this.url}/characters/${id}`)
-    //     .then(resp => resp.json())
-    //     .then(characters => {CollectionCharacter.addCollectionCharacters(characters)})
-    //     .catch((error) => {
-    //         alert(`There was an issue getting the characters from your collection due to ${error}. Please try again.`)
-    //     });
-    // }
-
     getCollectionCharacters() {
         fetch(`${this.url}/characters`)
         .then(resp => resp.json())
-        .then(characters => {CollectionCharacter.addCollectionCharacters(characters.data)})
+        .then(charactersInfo => {CollectionCharacter.addCollectionCharacters(charactersInfo.data)})
         .catch((error) => {
             alert(`There was an issue getting the characters from your collection due to ${error}. Please try again.`)
         });
