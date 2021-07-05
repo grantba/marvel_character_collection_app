@@ -16,7 +16,7 @@ class User {
 
     createDiv() {
         this.element.innerHTML = `
-            <h2 id="welcome-username-${this.id}" style="border-bottom: 2px solid #CCC">Welcome To The World Of Marvel ${this.username.charAt(0).toUpperCase() + this.username.slice(1)}! Unleash Your Inner Super Hero!</h2>
+            <h2 id="welcome-username-${this.id}" style="border-bottom: 2px solid #CCC">You Have Entered The World Of Marvel, ${this.username.charAt(0).toUpperCase() + this.username.slice(1)}.<br> Now You Can Unleash Your Inner Super Hero!</h2>
             <img src=${this.image} id="welcome-userimage" width="120" height="120" alt="User's Avatar">
             <h3 id="welcome-bio">User Bio:</h3>
             <h3>${this.bio}</h3>
@@ -49,7 +49,7 @@ class User {
         commentsDiv.innerHTML = "";
         const div = document.createElement("div");
         div.innerHTML = `
-            <h3>Welcome to the World of Marvel! Please sign up or login to enjoy the app.</h3>
+            <h3>Please Signup Or Login To Enjoy The World Of Marvel...<br><br> Where Everyone Can Be A Super Hero!</h3>
         `
         div.id = "welcome";
         commentsDiv.appendChild(div);
@@ -149,6 +149,14 @@ class User {
             const image = document.getElementById("user-image").value;
             userService.getOrSetUser(userName, email, bio, image);
         });
+    }
+
+    static editUserInfo() {
+        debugger;
+    }
+
+    static deleteUserAccount() {
+        debugger;
     }
 
 }
