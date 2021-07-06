@@ -4,6 +4,16 @@ class CommentService {
         this.url = url
     }
 
+    getAllComments(character) {
+        const characterInfo = character;
+        fetch(`${this.url}/comments`)
+        .then(resp => resp.json())
+        .then(allComments => {Comment.displayCollectionCharacterComments(allComments, characterInfo)})
+        .catch((error) => {
+            alert(`There was an issue getting all this character's comments due to ${error}. Please try again.`)
+        });
+    }
+
     getUserComments() {
         fetch(`${this.url}/comments`)
         .then(resp => resp.json())

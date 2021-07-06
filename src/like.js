@@ -53,4 +53,40 @@ class Like {
             return `<span class="like">Like ❤</span>&emsp;<span class="unlike">Dislike ❤</span>`;
         }
     }
+
+    static displayCollectionCharacterLikes(allLikes, character) {
+        const name = character.data.attributes.name;
+        const div = document.createElement("div");
+
+        const likes = allLikes.data.filter(like => like.attributes.character.name === name);
+
+        let totalLikes = 0;
+        let totalDislikes = 0;
+
+        likes.forEach(like => {
+            if (like.attributes.like_status === true) {
+                totalLikes += 1;
+            }
+            if (like.attributes.like_status === false) {
+                totalDislikes += 1;
+            }
+        })
+    
+        const like = (`${totalLikes} like${totalLikes !== 1 ? 's' : ''}`);
+        const dislike = (`${totalDislikes} dislike${totalDislikes !== 1 ? 's' : ''}`);
+
+        const cardContent = `
+        <div id="comment-card">
+            <div id="comment-card-inner">
+                <h2>${name} Comments</h2>
+                <h3 class="left-align">❤️ ${name} has a total of ${like}. ❤️</h3>
+                <h3 class="right-align">🖤 ${name} has a total of ${dislike}. 🖤</h3>
+            </div>
+        </div>
+        `
+    
+        div.innerHTML = cardContent;
+        commentsDiv.appendChild(div);
+        commentService.getAllComments(character);
+    }
 }

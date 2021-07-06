@@ -38,6 +38,7 @@ class User {
         const image = user.data.attributes.image;
 
         localStorage.setItem('currentUser', user.data.id);
+        localStorage.setItem('currentUserName', user.data.attributes.username);
         
         new User(id, userName, email, bio, image);
 
@@ -86,8 +87,10 @@ class User {
     }
 
     static logOutCurrentUser() {
-        alert("Thanks for visiting today. Come back soon!")
+        const userName = localStorage.getItem('currentUserName');
+        alert(`Thanks for visiting today, ${userName.charAt(0).toUpperCase() + userName.slice(1)}. Come back soon!`);
         localStorage.setItem('currentUser', "null");
+        localStorage.setItem('currentUserName', "null");
         addHeaderContent();
     }
 

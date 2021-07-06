@@ -107,59 +107,28 @@ class Comment {
         });
     }
 
-    static getCollectionCharacterComments(character) {
-        likeService.getAllLikes(character);    
-    }
-
-    static displayCollectionCharacterComments(allLikes, character) {
+    static displayCollectionCharacterComments(allComments, character) {
         const name = character.data.attributes.name;
-        const comments = character.data.attributes.comments;
-        const ul = document.createElement("ul");
-    
+        const div = document.createElement("div");
+        
+        const comments = allComments.data.filter(comment => comment.attributes.character.name === name);
+        let content = "";
+
         if (comments.length === 0) {
-            const li = document.createElement("li");
-            li.innerText = "This character currently has no comments but you could be the first to add one!\n\n"
-            ul.appendChild(li);
-        }
+            div.innerHTML = `<p>This character currently has no comments but you could be the first to add one!</p><br>`;
+        }        
         else {
             comments.forEach(comment => {
-                const li = document.createElement("li");
-                li.innerText = `${comment.description}\n\n`;
-                ul.appendChild(li);
-            })
-        }
+                debugger;
+                const userName = localStorage.getItem('currentUserName');
+                div.innerHTML += `<p>"${comment.attributes.description}"</p><br><br>`;
+            });
+        };
 
-        const div = document.createElement("div");
+        // -  ${userName.charAt(0).toUpperCase() + userName.slice(1)}
 
-        const likes = allLikes.data.filter(like => like.attributes.character.name === name);
-
-        let totalLikes = 0;
-        let totalDislikes = 0;
-
-        likes.forEach(like => {
-            if (like.attributes.like_status === true) {
-                totalLikes += 1;
-            }
-            if (like.attributes.like_status === false) {
-                totalDislikes += 1;
-            }
-        })
-    
-        const like = (`${totalLikes} like${totalLikes !== 1 ? 's' : ''}`);
-        const dislike = (`${totalDislikes} dislike${totalDislikes !== 1 ? 's' : ''}`);
-
-        const cardContent = `
-        <div id="comment-card">
-            <div id="comment-card-inner">
-                <h2>${name} Comments</h2>
-                <h3 class="left-align">❤️ ${name} has a total of ${like}. ❤️</h3>
-                <h3 class="right-align">🖤 ${name} has a total of ${dislike}. 🖤</h3>
-                <br><br><br>${ul.innerHTML}
-            </div>
-        </div>
-        `
-    
-        div.innerHTML = cardContent;
-        commentsDiv.appendChild(div);
+        div.id = "all-character-comments";
+        const cardDiv = document.getElementById("comment-card");
+        cardDiv.appendChild(div);
     }
 }

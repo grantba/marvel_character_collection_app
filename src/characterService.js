@@ -6,12 +6,10 @@ class CharacterService {
 
     getMarvelCharacterByName(search) {
         const ts = Number(new Date());
-        const hash = md5(ts + _PRIVATE_KEY + _PUBLIC_KEY);
     
         const params = {
             "name": search,
             "ts": ts,
-            "hash": hash
         }
         const options = {
             method: "POST",
@@ -35,12 +33,10 @@ class CharacterService {
     getMarvelCharacterById(event) {
         const id = event.target.parentElement.parentElement.parentElement.parentElement.dataset.id;
         const ts = Number(new Date());
-        const hash = md5(ts + _PRIVATE_KEY + _PUBLIC_KEY);
     
         const params = {
             "id": id,
             "ts": ts,
-            "hash": hash
         }
         const options = {
             method: "POST",
@@ -60,12 +56,10 @@ class CharacterService {
 
     getInfoMarvelCharacter(id) {
         const ts = Number(new Date());
-        const hash = md5(ts + _PRIVATE_KEY + _PUBLIC_KEY);
     
         const params = {
             "id": id,
             "ts": ts,
-            "hash": hash
         }
         const options = {
             method: "POST",

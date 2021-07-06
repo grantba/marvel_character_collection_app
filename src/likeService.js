@@ -8,7 +8,7 @@ class LikeService {
         const characterInfo = character;
         fetch(`${this.url}/likes`)
         .then(resp => resp.json())
-        .then(allLikes => {Comment.displayCollectionCharacterComments(allLikes, characterInfo)})
+        .then(allLikes => {Like.displayCollectionCharacterLikes(allLikes, characterInfo)})
         .catch((error) => {
             alert(`There was an issue getting all this character's likes due to ${error}. Please try again.`)
         });

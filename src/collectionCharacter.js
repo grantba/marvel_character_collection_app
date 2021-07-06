@@ -240,7 +240,7 @@ class CollectionCharacter {
         document.querySelector(".more-info-coll-btn").remove();
         document.querySelector("#likes-text").remove();
 
-        Comment.getCollectionCharacterComments(character);
+        likeService.getAllLikes(character);
     }
 
 }
