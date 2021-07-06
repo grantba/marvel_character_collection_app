@@ -29,4 +29,25 @@ class UserService {
         });
     }
 
+    deleteCurrentUser() {
+        const userId = localStorage.getItem('currentUser');
+        const userName = localStorage.getItem('currentUserName'); 
+
+        const options = {
+            method: "DELETE",
+        }
+    
+        fetch(`${this.url}/users/${userId}`, options)
+        .then(resp => resp.json())
+        .then(() => {
+            alert(`${userName.charAt(0).toUpperCase() + userName.slice(1)}, your account has been deleted.`);
+            localStorage.setItem('currentUser', "null");
+            localStorage.setItem('currentUserName', "null");
+            addHeaderContent();
+        })
+        .catch(error => {
+            alert(`There was an issue deleting your account due to ${error}. Please try again.`)
+        });
+    }
+
 }

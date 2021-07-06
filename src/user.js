@@ -80,7 +80,7 @@ class User {
                     User.editUserInfo();
                 }
                 if (event.target.id === "delete-my-info") {
-                    User.deleteUserAccount();
+                    userService.deleteCurrentUser();
                 }
             })
         }
@@ -155,10 +155,6 @@ class User {
     }
 
     static editUserInfo() {
-        debugger;
-    }
-
-    static deleteUserAccount() {
         debugger;
     }
 
