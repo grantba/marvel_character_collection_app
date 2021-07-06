@@ -24,10 +24,10 @@ function addHeaderContent() {
         header.innerHTML = headerContent;
 
         const logInButton = document.getElementById("login-btn");
-        logInButton.addEventListener("click", User.logInCurrentUser)
+        logInButton.addEventListener("click", User.userLogInForm);
 
         const signUpButton = document.getElementById("signup-btn");
-        signUpButton.addEventListener("click", User.signUpCurrentUser)
+        signUpButton.addEventListener("click", User.userSignUpForm);
 
         User.displaySignUpLogInMessage();
     }

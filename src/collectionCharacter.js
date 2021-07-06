@@ -134,10 +134,7 @@ class CollectionCharacter {
         characterDiv.innerHTML = "";
         commentsDiv.innerHTML = "";
         
-        if (characters.length === 0) {
-            alert("You have no characters in your collection at this time!")
-        }
-        else {
+        if (characters.length > 0) {
             characters.forEach(character => {
                 let id = character.id;
                 let name = character.attributes.name;
@@ -156,6 +153,9 @@ class CollectionCharacter {
             CollectionCharacter.addCommentCollectionButtonListener();
             CollectionCharacter.addMoreInfoButtonListener();
             CollectionCharacter.addHeartListener();
+        }
+        else {
+            alert("You have no characters in your collection at this time!")
         }
     }
 

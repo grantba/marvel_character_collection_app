@@ -38,10 +38,7 @@ class Comment {
         const userId = parseInt(localStorage.getItem('currentUser'));
         const comments = commentsInfo.filter(comment => comment.user.id === userId);
 
-        if (comments.length === 0) {
-            alert("You have no comments created at this time. If you haven't added any characters to your collection yet, you will have the ability to create comments for each character, once you have added them to your collection.")
-        }
-        else {
+        if (comments.length > 0) {
             comments.forEach(comment => {
                 let commentId = comment.id;
                 let commentDescription = comment.description;
@@ -61,6 +58,9 @@ class Comment {
             commentsDiv.appendChild(div); 
             Comment.addEditCommentButtonListener();
             Comment.addDeleteCommentButtonListener();
+        }
+        else {
+            alert("You have no comments created at this time.\n\nIf you haven't added any characters to your collection yet, you will have the ability to create comments for each character, once you have added them to your collection.")
         }
     }
 
@@ -124,7 +124,7 @@ class Comment {
                     div.innerHTML += `<p>"${comment.description}"</p><br><br>`;
                 }
                 else {
-                    div.innerHTML += `<p>"${comment.description}"  -  ${userName.charAt(0).toUpperCase() + userName.slice(1)}</p><br><br>`;
+                    div.innerHTML += `<p>"${comment.description}"  -  ${userName.charAt(0).toUpperCase() + userName.slice(1)}</p>`;
                 }
             });
         };

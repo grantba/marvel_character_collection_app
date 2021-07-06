@@ -15,11 +15,28 @@ class User {
     }
 
     createDiv() {
+        let image = "";
+        let bio = "";
+        debugger;
+        if (this.image === "null" || this.image === null || this.image === undefined || this.image === "") {
+            image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+        }
+        else {
+            image = this.image;
+        }
+
+        if (this.bio === "null" || this.bio === null || this.bio === undefined || this.bio === "") {
+            bio = "You currently have no user bio but you can always edit your information to add one."
+        }
+        else {
+            bio = this.bio;
+        }
+
         this.element.innerHTML = `
             <h2 id="welcome-username-${this.id}" style="border-bottom: 2px solid #CCC">You Have Entered The World Of Marvel, ${this.username.charAt(0).toUpperCase() + this.username.slice(1)}.<br> Now You Can Unleash Your Inner Super Hero!</h2>
-            <img src=${this.image} id="welcome-userimage" width="120" height="120" alt="User's Avatar">
+            <img src=${image} id="welcome-userimage" width="120" height="120" alt="User's Avatar">
             <h3 id="welcome-bio">User Bio:</h3>
-            <h3>${this.bio}</h3>
+            <h3>${bio}</h3>
         `
         return this.element;
     }
@@ -77,7 +94,7 @@ class User {
                     commentService.getUserComments();
                 }
                 if (event.target.id === "edit-my-info") {
-                    User.editUserInfo();
+                    userService.getUser();
                 }
                 if (event.target.id === "delete-my-info") {
                     userService.deleteCurrentUser();
@@ -92,14 +109,6 @@ class User {
         localStorage.setItem('currentUser', "null");
         localStorage.setItem('currentUserName', "null");
         addHeaderContent();
-    }
-
-    static logInCurrentUser() {
-        User.userLogInForm()
-    }
-
-    static signUpCurrentUser() {
-        User.userSignUpForm()
     }
 
     static userLogInForm() {
@@ -134,7 +143,7 @@ class User {
             <input type="text" id="user-email" name="email"><br><br>
             <label for="bio-label">Bio:</label><br>   
             <textarea id="user-bio" name="bio"></textarea><br><br> 
-            <label for="image-label">Avatar Image:</label><br>
+            <label for="image-label">Avatar Image URL:</label><br>
             <input type="text" id="user-image" name="image"><br><br>    
             <input type="submit" id="user-signup-form-btn" value="SignUp">
         `
@@ -154,8 +163,43 @@ class User {
         });
     }
 
-    static editUserInfo() {
-        debugger;
+    static editUserInfoForm(user) {
+        const userName = user.data.attributes.username;
+        const bio = user.data.attributes.bio;
+        const image = user.data.attributes.image;
+
+        const form = document.createElement("form");
+        form.innerHTML = `
+            <label for="username-label">Username:</label><br>
+            <span><input type="text" id="user-username" value=${userName}><br><br>
+            <label for="email-label">Email:</label><br>
+            <input type="text" id="user-email" placeholder="If changing, enter new email. Otherwise, enter current email."></span><br><br>
+            <span><label for="bio-label">Bio:</label><br>   
+            <textarea id="user-bio">${bio}</textarea><br><br> 
+            <label for="image-label">Avatar Image URL:</label><br>
+            <input type="text" id="user-image" value=${image}></span><br><br>    
+            <input type="submit" id="user-edit-form-btn" value="Update Information">
+        `
+        form.id = "form";
+        characterDiv.innerHTML = "";
+        commentsDiv.innerHTML = "";
+        commentsDiv.appendChild(form);
+
+        const userEditForm = document.getElementById("form");
+        userEditForm.addEventListener("submit", event => {
+            event.preventDefault();
+            const formUserName = document.getElementById("user-username").value;
+            const formEmail = document.getElementById("user-email").value;
+            const formBio = document.getElementById("user-bio").value;
+            const formImage = document.getElementById("user-image").value;
+
+            if (formUserName && formEmail) {
+                userService.updateCurrentUser(formUserName, formEmail, formBio, formImage)
+            }
+            else {
+                alert("Username and Email fields must be filled out completely before your account can be successfully updated. Please try again.")
+            }
+        });
     }
 
 }
