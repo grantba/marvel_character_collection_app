@@ -26,8 +26,8 @@ class Comment {
     }
 
     static addUserComments(commentsInfo) {
-        const userId = localStorage.getItem('currentUser');
-        const comments = commentsInfo.data.filter(comment => comment.relationships.user.data.id === userId);
+        characterDiv.innerHTML = "";
+        commentsDiv.innerHTML = "";
 
         const div = document.createElement("div");
         div.innerHTML = `
@@ -35,31 +35,30 @@ class Comment {
             `
         div.id = "all-comments";
 
+        const userId = parseInt(localStorage.getItem('currentUser'));
+        const comments = commentsInfo.filter(comment => comment.user.id === userId);
+
         if (comments.length === 0) {
             alert("You have no comments created at this time. If you haven't added any characters to your collection yet, you will have the ability to create comments for each character, once you have added them to your collection.")
         }
         else {
             comments.forEach(comment => {
-                if (comment.relationships.user.data.id === userId) {
-                    let commentId = comment.id;
-                    let commentDescription = comment.attributes.description;
-                    let characterName = comment.attributes.character.name;
-                    let characterId = comment.attributes.character.id;
-                    let characterThumbnail = comment.attributes.character.thumbnail;
-                    let smallCharacterThumbnail = characterThumbnail.replace("portrait_fantastic", "portrait_small");
-                    
-                    const cardContent = `
-                        <img src=${smallCharacterThumbnail} id="${characterId}-characterId" alt="${characterName} Marvel Character Image">&emsp;
-                        <a href="#" id="comment-link" class="edit-comment">Edit Comment</a>&emsp;
-                        <a href="#" id="comment-link" class="delete-comment">Delete Comment</a>
-                        <h3 class="user-comments" id="${commentId}-commentId">${characterName} - ${commentDescription}</h3><br>
-                    `
-                    div.innerHTML += cardContent;
-                }
-                characterDiv.innerHTML = "";
-                commentsDiv.innerHTML = "";
-                commentsDiv.appendChild(div); 
+                let commentId = comment.id;
+                let commentDescription = comment.description;
+                let characterName = comment.character.name;
+                let characterId = comment.character.id;
+                let characterThumbnail = comment.character.thumbnail;
+                let smallCharacterThumbnail = characterThumbnail.replace("portrait_fantastic", "portrait_small");
+
+                const cardContent = `
+                    <img src=${smallCharacterThumbnail} id="${characterId}-characterId" alt="${characterName} Marvel Character Image">&emsp;
+                    <a href="#" id="comment-link" class="edit-comment">Edit Comment</a>&emsp;
+                    <a href="#" id="comment-link" class="delete-comment">Delete Comment</a>
+                    <h3 class="user-comments" id="${commentId}-commentId">${characterName} - ${commentDescription}</h3><br>
+                `
+                div.innerHTML += cardContent;
             })
+            commentsDiv.appendChild(div); 
             Comment.addEditCommentButtonListener();
             Comment.addDeleteCommentButtonListener();
         }
@@ -68,14 +67,14 @@ class Comment {
     static addEditCommentButtonListener() {
         const editButtons = document.getElementsByClassName("edit-comment");
         for (const button of editButtons) {
-            button.addEventListener("click", event => Comment.editCharacterCommentForm(event));
+            button.addEventListener("click", event => {Comment.editCharacterCommentForm(event)});
         }
     }
 
     static addDeleteCommentButtonListener() {
         const delButtons = document.getElementsByClassName("delete-comment");
         for (const button of delButtons) {
-            button.addEventListener("click", event => commentService.deleteCharacterComment(event));
+            button.addEventListener("click", event => {commentService.deleteCharacterComment(event)});
         }
     }
 
@@ -110,22 +109,25 @@ class Comment {
     static displayCollectionCharacterComments(allComments, character) {
         const name = character.data.attributes.name;
         const div = document.createElement("div");
-        
-        const comments = allComments.data.filter(comment => comment.attributes.character.name === name);
-        let content = "";
+
+        const comments = allComments.filter(comment => comment.character.name === name);
 
         if (comments.length === 0) {
             div.innerHTML = `<p>This character currently has no comments but you could be the first to add one!</p><br>`;
         }        
         else {
             comments.forEach(comment => {
-                debugger;
-                const userName = localStorage.getItem('currentUserName');
-                div.innerHTML += `<p>"${comment.attributes.description}"</p><br><br>`;
+                // const userId = comment.user.id;
+                const userName = comment.user.username;
+
+                if (userName === undefined) {
+                    div.innerHTML += `<p>"${comment.description}"</p><br><br>`;
+                }
+                else {
+                    div.innerHTML += `<p>"${comment.description}"  -  ${userName.charAt(0).toUpperCase() + userName.slice(1)}</p><br><br>`;
+                }
             });
         };
-
-        // -  ${userName.charAt(0).toUpperCase() + userName.slice(1)}
 
         div.id = "all-character-comments";
         const cardDiv = document.getElementById("comment-card");
