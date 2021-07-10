@@ -4,20 +4,16 @@ class UserService {
         this.url = url
     }
 
-    getUser() {
-        const userId = localStorage.getItem('currentUser');
+    getOrSetUser(button, userName, password, email, bio, image) {
+        let message = "";
+        if (button === "SignUp") {
+            message = "Your new user account has been created."
+        }
 
-        fetch(`${this.url}/users/${userId}`)
-        .then(resp => resp.json())
-        .then(user => {User.editUserInfoForm(user)})
-        .catch(error => {
-            alert(`There was an issue retrieving your account information due to ${error}. Please try again.`)
-        });  
-    }
-
-    getOrSetUser(userName, email, bio, image) {
         const params = {
+            "button": button,
             "username": userName,
+            "password": password,
             "email": email,
             "bio": bio,
             "image": image
@@ -32,19 +28,29 @@ class UserService {
     
         fetch(`${this.url}/users`, options)
         .then(resp => resp.json())
-        .then(user => 
-            {User.createUser(user)
-            addHeaderContent()})
+        .then(user => {
+            if (button === "edit-my-info") {
+                User.editUserInfoForm(user);
+            }
+            else {
+                User.createUser(user)
+                addHeaderContent()
+                if (message === "Your new user account has been created.") {
+                    alert("Your new user account has been created.")
+                }
+            }
+        })
         .catch(error => {
             alert(`There was an issue either creating or logging you into you account due to ${error}. Please try again.\n\nIf you don't have an account yet, please sign up for an account first.`)
         });
     }
 
-    updateCurrentUser(formUserName, formEmail, formBio, formImage) {
+    updateCurrentUser(formUserName, formPassword, formEmail, formBio, formImage) {
         const userId = localStorage.getItem('currentUser');
         
         const params = {
             "username": formUserName,
+            "password": formPassword,
             "email": formEmail,
             "bio": formBio,
             "image": formImage

@@ -140,7 +140,7 @@ body {
 }
 
 input {
-  width: 60%;
+  width: 65%;
 }
 
 textarea {
@@ -148,7 +148,7 @@ textarea {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 
-	width: 60%;
+	width: 65%;
 }
 
 

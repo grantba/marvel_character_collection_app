@@ -9,6 +9,10 @@ class User {
         this.bio = bio;
         this.image = image;
 
+        localStorage.setItem('currentUser', id);
+        localStorage.setItem('currentUserName', userName);
+        localStorage.setItem('currentUserEmail', email);
+
         this.element = document.createElement("div");
         this.element.id = "user-card";
         this.displayWelcomeMessage();
@@ -17,7 +21,7 @@ class User {
     createDiv() {
         let image = "";
         let bio = "";
-        debugger;
+
         if (this.image === "null" || this.image === null || this.image === undefined || this.image === "") {
             image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
         }
@@ -53,9 +57,6 @@ class User {
         const email = user.data.attributes.email;
         const bio = user.data.attributes.bio;
         const image = user.data.attributes.image;
-
-        localStorage.setItem('currentUser', user.data.id);
-        localStorage.setItem('currentUserName', user.data.attributes.username);
         
         new User(id, userName, email, bio, image);
 
@@ -86,20 +87,26 @@ class User {
             `
             User.sideNav.innerHTML = sideNavContent;
 
-            User.sideNav.addEventListener("click", event => {
-                if (event.target.id === "my-character-collection") {
-                    characterService.getCollectionCharacters();
-                }
-                if (event.target.id === "my-comments") {
-                    commentService.getUserComments();
-                }
-                if (event.target.id === "edit-my-info") {
-                    userService.getUser();
-                }
-                if (event.target.id === "delete-my-info") {
-                    userService.deleteCurrentUser();
-                }
-            })
+            User.sideNav.addEventListener("click", event => {User.handleSideNavClick(event)})
+        }
+    }
+
+    static handleSideNavClick(event) {
+        if (event.target.id === "my-character-collection") {
+            characterService.getCollectionCharacters();
+        }
+        if (event.target.id === "my-comments") {
+            commentService.getUserComments();
+        }
+        if (event.target.id === "edit-my-info") {
+            const button = event.target.id;
+            const userName = localStorage.getItem('currentUserName');
+            const password = "";
+            const email = localStorage.getItem('currentUserEmail');
+            userService.getOrSetUser(button, userName, password, email);
+        }
+        if (event.target.id === "delete-my-info") {
+            userService.deleteCurrentUser();
         }
     }
 
@@ -108,6 +115,7 @@ class User {
         alert(`Thanks for visiting today, ${userName.charAt(0).toUpperCase() + userName.slice(1)}. Come back soon!`);
         localStorage.setItem('currentUser', "null");
         localStorage.setItem('currentUserName', "null");
+        localStorage.setItem('currentUserEmail', "null");
         addHeaderContent();
     }
 
@@ -116,8 +124,8 @@ class User {
         form.innerHTML = `
             <label for="username-label">Username:</label><br>
             <input type="text" id="user-username" name="username"><br><br>
-            <label for="email-label">Email:</label><br>
-            <input type="text" id="user-email" name="email"><br><br>  
+            <label for="password-label">Password:</label><br>
+            <input type="text" id="user-password" name="password"><br><br>  
             <input type="submit" id="user-login-form-btn" value="Log In">
         `
         form.id = "form";
@@ -128,9 +136,16 @@ class User {
         const userLogInForm = document.getElementById("form");
         userLogInForm.addEventListener("submit", event => {
             event.preventDefault();
+            const button = event.target.querySelector("#user-login-form-btn").value;
             const userName = document.getElementById("user-username").value;
-            const email = document.getElementById("user-email").value;
-            userService.getOrSetUser(userName, email);
+            const password = document.getElementById("user-password").value;
+
+            if (userName && password) {
+                userService.getOrSetUser(button, userName, password)
+            }
+            else {
+                alert("All fields must be filled out completely to login. Please try again.")
+            }
         });
     }
 
@@ -139,6 +154,8 @@ class User {
         form.innerHTML = `
             <label for="username-label">Username:</label><br>
             <input type="text" id="user-username" name="username"><br><br>
+            <label for="password-label">Password:</label><br>
+            <input type="text" id="user-password" name="password"><br><br>
             <label for="email-label">Email:</label><br>
             <input type="text" id="user-email" name="email"><br><br>
             <label for="bio-label">Bio:</label><br>   
@@ -155,29 +172,40 @@ class User {
         const userSignUpForm = document.getElementById("form");
         userSignUpForm.addEventListener("submit", event => {
             event.preventDefault();
+            const button = event.target.querySelector("#user-signup-form-btn").value;
             const userName = document.getElementById("user-username").value;
+            const userPassword = document.getElementById("user-password").value;
             const email = document.getElementById("user-email").value;
             const bio = document.getElementById("user-bio").value;
             const image = document.getElementById("user-image").value;
-            userService.getOrSetUser(userName, email, bio, image);
+
+            if (userName && email) {
+                userService.getOrSetUser(button, userName, userPassword, email, bio, image);
+            }
+            else {
+                alert("Username, Password, and Email are required to successfully create an account. Please try again.")
+            }
         });
     }
 
     static editUserInfoForm(user) {
         const userName = user.data.attributes.username;
+        const email = user.data.attributes.email;
         const bio = user.data.attributes.bio;
         const image = user.data.attributes.image;
 
         const form = document.createElement("form");
         form.innerHTML = `
             <label for="username-label">Username:</label><br>
-            <span><input type="text" id="user-username" value=${userName}><br><br>
+            <input type="text" id="user-username" value=${userName}><br><br>
+            <label for="password-label">Password:</label><br>
+            <input type="text" id="user-password" placeholder="Enter a new password if changing. Otherwise, enter current password."><br><br>
             <label for="email-label">Email:</label><br>
-            <input type="text" id="user-email" placeholder="If changing, enter new email. Otherwise, enter current email."></span><br><br>
-            <span><label for="bio-label">Bio:</label><br>   
+            <input type="text" id="user-email" value=${email}><br><br>
+            <label for="bio-label">Bio:</label><br>   
             <textarea id="user-bio">${bio}</textarea><br><br> 
             <label for="image-label">Avatar Image URL:</label><br>
-            <input type="text" id="user-image" value=${image}></span><br><br>    
+            <input type="text" id="user-image" value=${image}><br><br>    
             <input type="submit" id="user-edit-form-btn" value="Update Information">
         `
         form.id = "form";
@@ -189,15 +217,16 @@ class User {
         userEditForm.addEventListener("submit", event => {
             event.preventDefault();
             const formUserName = document.getElementById("user-username").value;
+            const formPassword = document.getElementById("user-password").value;
             const formEmail = document.getElementById("user-email").value;
             const formBio = document.getElementById("user-bio").value;
             const formImage = document.getElementById("user-image").value;
 
             if (formUserName && formEmail) {
-                userService.updateCurrentUser(formUserName, formEmail, formBio, formImage)
+                userService.updateCurrentUser(formUserName, formPassword, formEmail, formBio, formImage)
             }
             else {
-                alert("Username and Email fields must be filled out completely before your account can be successfully updated. Please try again.")
+                alert("Username, Password, and Email fields must be filled out completely before your account can be successfully updated. Please try again.")
             }
         });
     }
