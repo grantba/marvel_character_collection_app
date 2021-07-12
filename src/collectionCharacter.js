@@ -15,41 +15,43 @@ class CollectionCharacter {
         this.element = document.createElement("div");
         this.element.dataset.id = this.id;
         this.displayCollectionCharacter();
-    }
+    };
 
     static addHeartListener() {
         const likes = document.getElementsByClassName("like");
         for (const like of likes) {
-            like.addEventListener("click", event => Like.changeLikeStatus(event))};
+            like.addEventListener("click", event => Like.changeLikeStatus(event));
+        };
         const unlikes = document.getElementsByClassName("unlike");
         for (const unlike of unlikes) {
-            unlike.addEventListener("click", event => Like.changeUnlikeStatus(event))};
-    }
+            unlike.addEventListener("click", event => Like.changeUnlikeStatus(event));
+        };
+    };
     
     static addRemoveFromCollectionButtonListener() {
         const collButtons = document.getElementsByClassName("remove-collection-btn");
         for (const button of collButtons) {
             button.addEventListener("click", event => characterService.removeCollectionCharacter(event));
-        }
-    }
+        };
+    };
 
     static addCommentCollectionButtonListener() {
         const commentButtons = document.getElementsByClassName("comment-collection-btn");
         for (const button of commentButtons) {
             button.addEventListener("click", event => Comment.addCollectionCharacterComment(event));
-        }
-    }
+        };
+    };
 
     static addMoreInfoButtonListener() {
         const infoButtons = document.getElementsByClassName("more-info-coll-btn");
         for (const button of infoButtons) {
             button.addEventListener("click", event => getMoreInfo(event));
-        }
-    }
+        };
+    };
 
     displayCollectionCharacter() {
         characterDiv.appendChild(this.createDiv());
-    }
+    };
 
     createDiv() {
         this.element.innerHTML = `
@@ -71,16 +73,15 @@ class CollectionCharacter {
             </div>
         </div>
         <br><br>
-        `
+        `;
         return this.element;
-    }
+    };
 
     static createCollectionCharacter(characterInfo) {
         if (characterInfo['status'] === "Ok") {
             if (characterInfo['data']['results'].length === 0) {
-                alert("There was an issue adding this character to your collection. Please try again.")
-            }
-            else {
+                alert("There was an issue adding this character to your collection. Please try again.");
+            } else {
                 let name = characterInfo['data']["results"][0]['name'];
                 let description = characterInfo['data']["results"][0]['description'];
                 let thumbnail = characterInfo['data']["results"][0]['thumbnail']['path'] + "/portrait_fantastic." + characterInfo['data']["results"][0]['thumbnail']['extension'];
@@ -88,22 +89,21 @@ class CollectionCharacter {
                 let comicsList = characterInfo['data']["results"][0]['comics']['items'];
                 let comics = comicsList.map(comic => {
                     return `=>${comic.name}`;
-                }) 
+                }); 
                 let eventsList = characterInfo['data']["results"][0]['events']['items'];
                 let events = eventsList.map(event => {
                     return `=>${event.name}`;
-                }) 
+                }); 
                 let seriesList = characterInfo['data']["results"][0]['series']['items'];
                 let series = seriesList.map(series => {
                     return `=>${series.name}`;
-                }) 
+                });
             characterService.addCharacterToCollection(name, description, thumbnail, urls, comics, events, series);
-            }
-        }
-        else {
-            alert("There was an issue adding this character to your collection. Please try again.")
-        }
-    }
+            };
+        } else {
+            alert("There was an issue adding this character to your collection. Please try again.");
+        };
+    };
 
     static addSingleCollectionCharacter(character) {
         characterDiv.innerHTML = "";
@@ -125,7 +125,7 @@ class CollectionCharacter {
         CollectionCharacter.addCommentCollectionButtonListener();
         CollectionCharacter.addMoreInfoButtonListener();
         CollectionCharacter.addHeartListener();
-    }
+    };
 
     static addCollectionCharacters(charactersInfo) {
         const userId = localStorage.getItem('currentUser');
@@ -148,16 +148,15 @@ class CollectionCharacter {
                 let series = null;
 
                 new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, userId);
-            })
+            });
             CollectionCharacter.addRemoveFromCollectionButtonListener();
             CollectionCharacter.addCommentCollectionButtonListener();
             CollectionCharacter.addMoreInfoButtonListener();
             CollectionCharacter.addHeartListener();
-        }
-        else {
-            alert("You have no characters in your collection at this time!")
-        }
-    }
+        } else {
+            alert("You have no characters in your collection at this time!");
+        };
+    };
 
     static displayExtraInfoCollectionCharacter(character) {
         characterDiv.innerHTML = "";
@@ -180,7 +179,7 @@ class CollectionCharacter {
         CollectionCharacter.addCommentCollectionButtonListener();
         CollectionCharacter.addMoreInfoButtonListener();
         CollectionCharacter.addHeartListener();
-    }
+    };
 
     displayExtraInfoDivs() {
         const comicsList = (this.comics.length === 0 ? "<li>Unfortunately, this character has had no comic appearances yet. Contact Marvel and tell them how you feel about this!<br><br>" : this.comics.replaceAll(",=>", "<br><br><li> ").replaceAll("=>", "<li> "));
@@ -198,7 +197,7 @@ class CollectionCharacter {
             </div>
         </div>
         <br><br>
-        `
+        `;
         div2.dataset.id = this.id;
     
         const div3 = document.createElement("div");
@@ -212,7 +211,7 @@ class CollectionCharacter {
             </div>
         </div>
         <br><br>
-        `
+        `;
         div3.dataset.id = this.id;
     
         const div4 = document.createElement("div");
@@ -226,13 +225,13 @@ class CollectionCharacter {
             </div>
         </div>
         <br><br>
-        `
+        `;
         div4.dataset.id = this.id;
 
         characterDiv.appendChild(div2);
         characterDiv.appendChild(div3);
         characterDiv.appendChild(div4);
-    }
+    };
 
     static addExtraInfoCollectionCharacter(character) {
         CollectionCharacter.displayExtraInfoCollectionCharacter(character);
@@ -241,6 +240,6 @@ class CollectionCharacter {
         document.querySelector("#likes-text").remove();
 
         likeService.getAllLikes(character);
-    }
+    };
 
-}
+};

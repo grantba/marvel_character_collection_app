@@ -1,58 +1,58 @@
 body {
-    height: 500px;
-    background-image: url("../assets/images/multiple-images-marvel-wallpaper.jpg");
-    background-size: cover;
+  height: 500px;
+  background-image: url("../assets/images/multiple-images-marvel-wallpaper.jpg");
+  background-size: cover;
 }
 
 .header {
-    overflow: hidden;
-    background-color: #0c0c0c;
-    color: red;
-    padding: 40px 10px;
-    /* position: fixed; */
-    border-radius: 20px;
+  overflow: hidden;
+  background-color: #0c0c0c;
+  color: red;
+  padding: 40px 10px;
+  /* position: fixed; */
+  border-radius: 20px;
 }
   
 /* Style the header links */
 .header a {
-    float: left;
-    color: white;
-    text-align: center;
-    padding: 12px;
-    text-decoration: none;
-    font-size: 28px;
-    line-height: 25px;
-    border-radius: 10px;
+  float: left;
+  color: white;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 28px;
+  line-height: 25px;
+  border-radius: 10px;
 }
   
 /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
 .header a.logo {
-    font-size: 40px;
-    font-weight: bold;
-    padding-right: auto;
-    text-align: center;
-    -webkit-animation: glow 1s ease-in-out infinite alternate;
-    -moz-animation: glow 1s ease-in-out infinite alternate;
-    animation: glow 1s ease-in-out infinite alternate;
+  font-size: 40px;
+  font-weight: bold;
+  padding-right: auto;
+  text-align: center;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
 }
       
 @-webkit-keyframes glow {
-        from {
-          text-shadow: 0 0 5px #fff, 0 0 20px #fff, 0 0 30px #ce0b0b, 0 0 40px #ce0b0b, 0 0 50px #ce0b0b, 0 0 60px #ce0b0b, 0 0 70px #ce0b0b;
-        }
-        to {
-          text-shadow: 0 0 10px #fff, 0 0 30px #8a3eee, 0 0 40px #8a3eee, 0 0 50px #8a3eee, 0 0 60px #8a3eee, 0 0 70px #8a3eee, 0 0 80px #8a3eee;
-        }
+  from {
+    text-shadow: 0 0 5px #fff, 0 0 20px #fff, 0 0 30px #ce0b0b, 0 0 40px #ce0b0b, 0 0 50px #ce0b0b, 0 0 60px #ce0b0b, 0 0 70px #ce0b0b;
+  }
+  to {
+    text-shadow: 0 0 10px #fff, 0 0 30px #8a3eee, 0 0 40px #8a3eee, 0 0 50px #8a3eee, 0 0 60px #8a3eee, 0 0 70px #8a3eee, 0 0 80px #8a3eee;
+  }
 }
   
 /* Change the background color on mouse-over */
 .header-right a:hover {
-    background-color: #0c8055;
-    color: white;
+  background-color: #0c8055;
+  color: white;
 }
 
 .header-right {
-    float: right;
+  float: right;
 }
 
 .footer {
@@ -75,47 +75,47 @@ body {
 
 /* Style the links inside the sidenav */
 #mySidenav a {
-    position: absolute; /* Position them relative to the browser window */
-    left: -80px; /* Position them outside of the screen */
-    transition: 0.3s; /* Add transition on hover */
-    padding: 15px; /* 15px padding */
-    width: 125px; /* Set a specific width */
-    text-decoration: none; /* Remove underline */
-    font-size: 25px; /* Increase font size */
-    font-weight: bold;
-    color: white; /* White text color */
-    border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
-  }
+  position: absolute; /* Position them relative to the browser window */
+  left: -80px; /* Position them outside of the screen */
+  transition: 0.3s; /* Add transition on hover */
+  padding: 15px; /* 15px padding */
+  width: 125px; /* Set a specific width */
+  text-decoration: none; /* Remove underline */
+  font-size: 25px; /* Increase font size */
+  font-weight: bold;
+  color: white; /* White text color */
+  border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+}
   
 #mySidenav a:hover {
-    left: 0; /* On mouse-over, make the elements appear as they should */
+  left: 0; /* On mouse-over, make the elements appear as they should */
 }
 
 #character-container {
-    margin-left: 9rem;
-    margin-bottom: 15px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-column-gap: 1rem;
-    padding: 20px;
+  margin-left: 9rem;
+  margin-bottom: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-column-gap: 1rem;
+  padding: 20px;
 }
 
 #comments-container {
-    margin-left: 185px;
-    margin-right: 5px;
-    margin-bottom: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+  margin-left: 185px;
+  margin-right: 5px;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 #my-character-collection {
-    top: 180px;
-    background-color: #0c8055;
+  top: 180px;
+  background-color: #0c8055;
 }
   
 #my-comments {
-    top: 310px;
-    background-color: #2196F3; /* Blue */
+  top: 310px;
+  background-color: #2196F3; /* Blue */
 }
 
 #edit-my-info {
@@ -129,14 +129,14 @@ body {
 }
 
 #form {
-    margin-left: auto;
-    margin-right: auto;
-    height: auto;
-    width: 50%;
-    color: white;
-    border-radius: 25px;
-    background: #080808;
-    padding: 35px;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+  width: 50%;
+  color: white;
+  border-radius: 25px;
+  background: #080808;
+  padding: 35px;
 }
 
 input {
@@ -147,7 +147,6 @@ textarea {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-
 	width: 65%;
 }
 
@@ -157,91 +156,91 @@ input[type=submit] {
 }
 
 button {
-    border-radius: 25px;
-    background-color: black;
-    color: white;
-    padding: 5px;
-    margin-top: 5px;
+  border-radius: 25px;
+  background-color: black;
+  color: white;
+  padding: 5px;
+margin-top: 5px;
 }
 
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
-    background: #080808;
-    color: rgb(247, 239, 239);
-    width: 300px;
-    height: 430px;
-    border: 10px solid #0e0d0d;
-    border-radius: 30px;
-    padding: 1px;
-    padding-bottom: 2px;
-    perspective: 1000px; /* Remove this if you don't want the 3D effect */
-  }
+  background: #080808;
+  color: rgb(247, 239, 239);
+  width: 300px;
+  height: 430px;
+  border: 10px solid #0e0d0d;
+  border-radius: 30px;
+  padding: 1px;
+  padding-bottom: 2px;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
   
-  /* This container is needed to position the front and back side */
-  .flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
-  }
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
   
-  /* Do an horizontal flip when you move the mouse over the flip box container */
-  .flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-  }
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
   
-  /* Position the front and back side */
-  .flip-card-front, .flip-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden; /* Safari */
-    backface-visibility: hidden;
-  }
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
   
-  /* Style the front side (fallback if image is missing) */
-  .flip-card-front img{
-    padding: 2px;
-    border-radius: 25px;
-    width: 60%;
-    background-color: black;
-    color: white;
-  }
+/* Style the front side (fallback if image is missing) */
+.flip-card-front img{
+  padding: 2px;
+  border-radius: 25px;
+  width: 60%;
+  background-color: black;
+  color: white;
+}
   
-  /* Style the back side */
-  .flip-card-back {
-    padding: 2px;
-    border-radius: 25px;
-    background-color: #2196F3;
-    color: black;
-    transform: rotateY(180deg);
-    overflow: hidden;
-  }
+/* Style the back side */
+.flip-card-back {
+  padding: 2px;
+  border-radius: 25px;
+  background-color: #2196F3;
+  color: black;
+  transform: rotateY(180deg);
+  overflow: hidden;
+}
 
-  .info-card {
-    background: #080808;
-    color: rgb(247, 239, 239);
-    width: 300px;
-    height: auto;
-    border: 10px solid #0e0d0d;
-    border-radius: 30px;
-    padding: 1px;
+.info-card {
+  background: #080808;
+  color: rgb(247, 239, 239);
+  width: 300px;
+  height: auto;
+  border: 10px solid #0e0d0d;
+  border-radius: 30px;
+  padding: 1px;
 }
 
 .info-card-inner {
-    position: relative;
-    width: 100%;
-    min-height: 100px;
-    overflow: hidden;
-    text-align: left;
+  position: relative;
+  width: 100%;
+  min-height: 100px;
+  overflow: hidden;
+  text-align: left;
 }
 
 .info-card-inner h2 {
-    border-bottom: 2px solid #CCC;
-    padding-bottom:15px;
-    text-align: center;
+  border-bottom: 2px solid #CCC;
+  padding-bottom:15px;
+  text-align: center;
 }
 
 #all-comments {
@@ -273,15 +272,15 @@ button {
 }
 
 #comment-card {
-    background: #080808;
-    color: rgb(247, 239, 239);
-    border-radius: 25px;
-    padding: 20px;
-    padding-top: 10px;
-    height: auto;
-    margin-bottom: 10%;
-    margin-top: 0%;
-    overflow-wrap: break-word;
+  background: #080808;
+  color: rgb(247, 239, 239);
+  border-radius: 25px;
+  padding: 20px;
+  padding-top: 10px;
+  height: auto;
+  margin-bottom: 10%;
+  margin-top: 0%;
+  overflow-wrap: break-word;
 }
 
 #comment-card img {
@@ -297,9 +296,9 @@ button {
 }
 
 #comment-card-inner h2 {
-    border-bottom: 2px solid #CCC;
-    padding-bottom:15px;
-    text-align: center;
+  border-bottom: 2px solid #CCC;
+  padding-bottom:15px;
+  text-align: center;
 }
 
 #all-character-comments {
@@ -308,7 +307,7 @@ button {
 }
 
 #likes-text {
-    color: white;
+  color: white;
 }
 
 .like:hover {
@@ -342,22 +341,22 @@ button {
 }
 
 #user-card {
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 10%;
-    margin-top: 0%;
-    height: auto;
-    width: 60%;
-    background: #080808;
-    color: rgb(247, 239, 239);
-    border-radius: 25px;
-    padding: 10px 20px 20px 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10%;
+  margin-top: 0%;
+  height: auto;
+  width: 60%;
+  background: #080808;
+  color: rgb(247, 239, 239);
+  border-radius: 25px;
+  padding: 10px 20px 20px 20px;
 }
 
 #user-card h2 {
-    border-bottom: 2px solid #CCC;
-    text-align: center;
-    padding-bottom: 15px;
+  border-bottom: 2px solid #CCC;
+  text-align: center;
+  padding-bottom: 15px;
 }
 
 #user-card h3 {
@@ -369,11 +368,11 @@ button {
 }
 
 #comment-link {
-    text-decoration: none;
-    color: #348fda;
+  text-decoration: none;
+  color: #348fda;
 }
 
 #marvel-link {
-    text-decoration: none;
-    color: black;
+  text-decoration: none;
+  color: black;
 }
