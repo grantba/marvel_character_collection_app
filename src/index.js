@@ -9,7 +9,7 @@ const characterDiv = document.getElementById("character-container");
 const commentsDiv = document.getElementById("comments-container");
 
 function addHeaderContent() {
-    if (localStorage.getItem('currentUser') === "null") {
+    if (localStorage.getItem('currentUser') === null) {
         characterDiv.innerHTML = "";
         commentsDiv.innerHTML = "";
         User.sideNav.innerHTML = "";

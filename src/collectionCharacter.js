@@ -130,11 +130,11 @@ class CollectionCharacter {
     static addCollectionCharacters(charactersInfo) {
         const userId = localStorage.getItem('currentUser');
         const characters = charactersInfo.filter(character => character.relationships.user.data.id === userId);
-
-        characterDiv.innerHTML = "";
-        commentsDiv.innerHTML = "";
         
         if (characters.length > 0) {
+            characterDiv.innerHTML = "";
+            commentsDiv.innerHTML = "";
+            
             characters.forEach(character => {
                 let id = character.id;
                 let name = character.attributes.name;
@@ -153,7 +153,8 @@ class CollectionCharacter {
             CollectionCharacter.addCommentCollectionButtonListener();
             CollectionCharacter.addMoreInfoButtonListener();
             CollectionCharacter.addHeartListener();
-        } else {
+        };
+        if (characters.length === 0) {
             alert("You have no characters in your collection at this time!");
         };
     };

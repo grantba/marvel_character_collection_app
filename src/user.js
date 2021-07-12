@@ -1,6 +1,7 @@
 class User {
 
     static sideNav = document.querySelector(".sidenav");
+    static count = 0;
 
     constructor(id, userName, email, bio, image) {
         this.id = id;
@@ -73,7 +74,7 @@ class User {
     };
 
     static addSideNavContent() {
-        if (localStorage.getItem('currentUser') === "null") {
+        if (localStorage.getItem('currentUser') === null) {
             User.sideNav.innerHTML = "";
         } else {
             const sideNavContent = `
@@ -83,8 +84,7 @@ class User {
                 <a href="#" id="delete-my-info">Delete My Account</a>
             `;
             User.sideNav.innerHTML = sideNavContent;
-
-            User.sideNav.addEventListener("click", event => {User.handleSideNavClick(event)});
+            User.sideNav.addEventListener("click", event => User.handleSideNavClick(event));
         };
     };
 
@@ -103,7 +103,13 @@ class User {
             userService.getOrSetUser(button, userName, password, email);
         };
         if (event.target.id === "delete-my-info") {
-            userService.deleteCurrentUser();
+            if (User.count === 0) {
+                User.count += 1;
+                alert("Are you sure you want to delete your account?\n\nIf so, just click on 'Delete My Account' again and your account will be deleted...although we'll be sad to see you go!");
+            } else {
+                User.count = 0;
+                userService.deleteCurrentUser();
+            };
         };
     };
 

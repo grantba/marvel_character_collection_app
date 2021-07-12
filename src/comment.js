@@ -30,9 +30,6 @@ class Comment {
     };
 
     static addUserComments(commentsInfo) {
-        characterDiv.innerHTML = "";
-        commentsDiv.innerHTML = "";
-
         const div = document.createElement("div");
         div.innerHTML = `
             <h2 id="all-comments-header">Your Character Comments</h2>
@@ -43,6 +40,9 @@ class Comment {
         const comments = commentsInfo.filter(comment => comment.user.id === userId);
 
         if (comments.length > 0) {
+            characterDiv.innerHTML = "";
+            commentsDiv.innerHTML = "";
+            
             comments.forEach(comment => {
                 let commentId = comment.id;
                 let commentDescription = comment.description;
@@ -62,7 +62,8 @@ class Comment {
             commentsDiv.appendChild(div); 
             Comment.addEditCommentButtonListener();
             Comment.addDeleteCommentButtonListener();
-        } else {
+        };
+        if (comments.length === 0) {
             alert("You have no comments created at this time.\n\nIf you haven't added any characters to your collection yet, you will have the ability to create comments for each character, once you have added them to your collection.");
         };
     };

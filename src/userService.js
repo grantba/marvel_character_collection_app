@@ -80,8 +80,7 @@ class UserService {
         fetch(`${this.url}/users/${userId}`, options)
         .then(resp => resp.json())
         .then(() => {
-            localStorage.setItem('currentUser', "null");
-            localStorage.setItem('currentUserName', "null");
+            localStorage.clear();
             addHeaderContent();
             alert(`${userName.charAt(0).toUpperCase() + userName.slice(1)}, your account has been deleted.`);
         })
