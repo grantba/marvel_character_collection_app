@@ -15,38 +15,33 @@ class CollectionCharacter {
         this.element = document.createElement("div");
         this.element.dataset.id = this.id;
         this.displayCollectionCharacter();
+
+        this.addMoreInfoButtonListener();
+        this.addHeartListener();
+        this.addRemoveFromCollectionButtonListener();
+        this.addCommentCollectionButtonListener();
     };
 
-    static addHeartListener() {
-        const likes = document.getElementsByClassName("like");
-        for (const like of likes) {
-            like.addEventListener("click", event => Like.changeLikeStatus(event));
-        };
-        const unlikes = document.getElementsByClassName("unlike");
-        for (const unlike of unlikes) {
-            unlike.addEventListener("click", event => Like.changeUnlikeStatus(event));
-        };
+    addHeartListener() {
+        const like = this.element.querySelector(".like");
+        like.addEventListener("click", () => Like.changeLikeStatus(event));
+        const unlike = this.element.querySelector(".unlike");
+        unlike.addEventListener("click", () => Like.changeUnlikeStatus(event));
     };
     
-    static addRemoveFromCollectionButtonListener() {
-        const collButtons = document.getElementsByClassName("remove-collection-btn");
-        for (const button of collButtons) {
-            button.addEventListener("click", event => characterService.removeCollectionCharacter(event));
-        };
+    addRemoveFromCollectionButtonListener() {
+        const collButton = this.element.querySelector(".remove-collection-btn");
+        collButton.addEventListener("click", () => characterService.removeCollectionCharacter(event));
     };
 
-    static addCommentCollectionButtonListener() {
-        const commentButtons = document.getElementsByClassName("comment-collection-btn");
-        for (const button of commentButtons) {
-            button.addEventListener("click", event => Comment.addCollectionCharacterComment(event));
-        };
+    addCommentCollectionButtonListener() {
+        const commentButton = this.element.querySelector(".comment-collection-btn");
+        commentButton.addEventListener("click", () => Comment.addCollectionCharacterComment(event));
     };
 
-    static addMoreInfoButtonListener() {
-        const infoButtons = document.getElementsByClassName("more-info-coll-btn");
-        for (const button of infoButtons) {
-            button.addEventListener("click", event => getMoreInfo(event));
-        };
+    addMoreInfoButtonListener() {
+        const infoButton = this.element.querySelector(".more-info-coll-btn");
+        infoButton.addEventListener("click", () => getMoreInfo(event, this.id));
     };
 
     displayCollectionCharacter() {
@@ -110,10 +105,7 @@ class CollectionCharacter {
         commentsDiv.innerHTML = "";
 
         let id = character.data.id;
-        let name = character.data.attributes.name;
-        let description = character.data.attributes.description;
-        let thumbnail = character.data.attributes.thumbnail;
-        let urls = character.data.attributes.urls;
+        let {name, description, thumbnail, urls} = character.data.attributes;
         let comics = null;
         let events = null;
         let series = null;
@@ -121,38 +113,27 @@ class CollectionCharacter {
         let userId = localStorage.getItem('currentUser');
         
         new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, userId);
-        CollectionCharacter.addRemoveFromCollectionButtonListener();
-        CollectionCharacter.addCommentCollectionButtonListener();
-        CollectionCharacter.addMoreInfoButtonListener();
-        CollectionCharacter.addHeartListener();
     };
 
     static addCollectionCharacters(charactersInfo) {
+        characterDiv.innerHTML = "";
+        commentsDiv.innerHTML = "";
+
         const userId = localStorage.getItem('currentUser');
         const characters = charactersInfo.filter(character => character.relationships.user.data.id === userId);
-        
+
         if (characters.length > 0) {
-            characterDiv.innerHTML = "";
-            commentsDiv.innerHTML = "";
-            
             characters.forEach(character => {
                 let id = character.id;
-                let name = character.attributes.name;
-                let description = character.attributes.description;
-                let thumbnail = character.attributes.thumbnail;
-                let urls = character.attributes.urls;
-                let likes = character.attributes.likes.find(like => like.user_id === parseInt(userId));
-                let like = (likes === undefined ? undefined : likes.like_status);
+                let {name, description, thumbnail, urls} = character.attributes;
                 let comics = null;
                 let events = null;
                 let series = null;
+                let likes = character.attributes.likes.find(like => like.user_id === parseInt(userId));
+                let like = (likes === undefined ? undefined : likes.like_status);
 
                 new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, userId);
             });
-            CollectionCharacter.addRemoveFromCollectionButtonListener();
-            CollectionCharacter.addCommentCollectionButtonListener();
-            CollectionCharacter.addMoreInfoButtonListener();
-            CollectionCharacter.addHeartListener();
         };
         if (characters.length === 0) {
             alert("You have no characters in your collection at this time!");
@@ -165,21 +146,11 @@ class CollectionCharacter {
 
         let userId = localStorage.getItem('currentUser');
         let id = character.data.id;
-        let name = character.data.attributes.name;
-        let description = character.data.attributes.description;
-        let thumbnail = character.data.attributes.thumbnail;
-        let urls = character.data.attributes.urls;
-        let comics = character.data.attributes.comics;
-        let events = character.data.attributes.events;
-        let series = character.data.attributes.series;
+        let {name, description, thumbnail, urls, comics, events, series} = character.data.attributes;
         let likes = character.data.attributes.likes.find(like => like.user_id === userId);
         let like = (likes === undefined ? undefined : likes.like_status);
 
         new CollectionCharacter(id, name, description, thumbnail, urls, comics, events, series, like, userId).displayExtraInfoDivs();
-        CollectionCharacter.addRemoveFromCollectionButtonListener();
-        CollectionCharacter.addCommentCollectionButtonListener();
-        CollectionCharacter.addMoreInfoButtonListener();
-        CollectionCharacter.addHeartListener();
     };
 
     displayExtraInfoDivs() {

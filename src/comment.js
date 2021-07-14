@@ -30,7 +30,11 @@ class Comment {
     };
 
     static addUserComments(commentsInfo) {
+        characterDiv.innerHTML = "";
+        commentsDiv.innerHTML = "";
+
         const div = document.createElement("div");
+
         div.innerHTML = `
             <h2 id="all-comments-header">Your Character Comments</h2>
             `;
@@ -39,10 +43,7 @@ class Comment {
         const userId = parseInt(localStorage.getItem('currentUser'));
         const comments = commentsInfo.filter(comment => comment.user.id === userId);
 
-        if (comments.length > 0) {
-            characterDiv.innerHTML = "";
-            commentsDiv.innerHTML = "";
-            
+        if (comments.length > 0) {          
             comments.forEach(comment => {
                 let commentId = comment.id;
                 let commentDescription = comment.description;

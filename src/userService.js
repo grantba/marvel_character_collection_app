@@ -29,17 +29,21 @@ class UserService {
         fetch(`${this.url}/users`, options)
         .then(resp => resp.json())
         .then(user => {
-            if (button === "edit-my-info") {
-                User.editUserInfoForm(user);
+            if (user.errors) {
+                throw new Error(user.errors)
             } else {
-                User.createUser(user);
-                addHeaderContent();
-                if (message !== "") {
-                    alert(`${message}`);
+                if (button === "edit-my-info") {
+                    User.editUserInfoForm(user);
+                } else {
+                    User.createUser(user);
+                    addHeaderContent();
+                    if (message !== "") {
+                        alert(`${message}`);
+                    };
                 };
-            };
+            }
         })
-        .catch(error => {alert(`There was an issue either creating or logging you into you account due to ${error}. Please try again.\n\nIf you don't have an account yet, please sign up for an account first.`)});
+        .catch(error => alert(`${error.message.replace("., ", ".\n")}\n\nPlease try again.`));
     };
 
     updateCurrentUser(formUserName, formPassword, formEmail, formBio, formImage) {
@@ -82,7 +86,7 @@ class UserService {
         .then(() => {
             localStorage.clear();
             addHeaderContent();
-            alert(`${userName.charAt(0).toUpperCase() + userName.slice(1)}, your account has been deleted.`);
+            alert(`${userName.charAt(0).toUpperCase() + userName.slice(1)}, your account has been deleted. We're sad to see you go, but thanks for visiting!`);
         })
         .catch(error => {alert(`There was an issue deleting your account due to ${error}. Please try again.`)});
     };

@@ -58,12 +58,12 @@ function getCharacterSearchForm() {
 
 User.addSideNavContent();
 
-function getMoreInfo(event) {
-    const id = event.target.parentElement.parentElement.parentElement.parentElement.dataset.id;
+function getMoreInfo(event, id) {
     if (event.target.parentElement.previousElementSibling.querySelector("h2").className === "collection-character") {
         characterService.getInfoCollectionCharacter(id);
     };
     if (event.target.parentElement.previousElementSibling.querySelector("h2").className === "marvel-collection") {
+        const id = event.target.parentElement.parentElement.parentElement.parentElement.dataset.id;
         characterService.getInfoMarvelCharacter(id);
     };
 };
